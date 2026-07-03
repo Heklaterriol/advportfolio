@@ -7,9 +7,9 @@
 // No direct access.
 defined('_JEXEC') or die;
 
-use JoomlaCMSFactory;
-use JoomlaCMSLanguageText;
-use JoomlaCMSHelperStringHelper;
+use Joomla\CMS\Factory;
+use Joomla\CMS\Language\Text;
+use Joomla\CMS\Helper\StringHelper;
 
 $wa = Factory::getApplication()->getDocument()->getWebAssetManager();
 $wa->useScript('jquery');

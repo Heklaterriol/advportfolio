@@ -7,11 +7,11 @@
 // No direct access.
 defined('_JEXEC') or die;
 
-use JoomlaCMSFactory;
-use JoomlaCMSLanguageText;
-use JoomlaCMSRouterRoute;
-use JoomlaCMSHelperContentHelper;
-use JoomlaCMSLayoutLayoutHelper;
+use Joomla\CMS\Factory;
+use Joomla\CMS\Language\Text;
+use Joomla\CMS\Router\Route;
+use Joomla\CMS\Helper\ContentHelper;
+use Joomla\CMS\Layout\LayoutHelper;
 
 $wa = Factory::getApplication()->getDocument()->getWebAssetManager();
 $wa->useScript('com_advportfolio.admin.script');

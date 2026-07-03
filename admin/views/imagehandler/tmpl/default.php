@@ -7,9 +7,9 @@
 // No direct access.
 defined('_JEXEC') or die;
 
-use JoomlaCMSFactory;
-use JoomlaCMSLanguageText;
-use JoomlaCMSUriUri;
+use Joomla\CMS\Factory;
+use Joomla\CMS\Language\Text;
+use Joomla\CMS\Uri\Uri;
 
 $wa = Factory::getApplication()->getDocument()->getWebAssetManager();
 $wa->useScript('dropzone');
