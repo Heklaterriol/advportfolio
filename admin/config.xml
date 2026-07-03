@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+/**
+ * @copyright	Copyright (c) 2013 Skyline Technology Ltd (http://extstore.com). All rights reserved.
+ * @license		http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL
+ */
+ -->
+<config>
+	<fieldset
+		name="project"
+		label="COM_ADVPORTFOLIO_CONFIG_FIELDSET_PROJECT_LABEL"
+		description="COM_ADVPORTFOLIO_CONFIG_FIELDSET_PROJECT_DESC"
+	>
+		<field
+			name="project_layout"
+			type="componentlayout"
+			label="COM_ADVPORTFOLIO_CONFIG_FIELD_PROJECT_LAYOUT_LABEL"
+			description="COM_ADVPORTFOLIO_CONFIG_FIELD_PROJECT_LAYOUT_DESC"
+			menuitems="true"
+			extension="com_advportfolio"
+			view="project"
+		/>
+
+		<field
+			name="show_title"
+			type="radio"
+			class="btn-group"
+			default="1"
+			label="JGLOBAL_SHOW_TITLE_LABEL"
+			description="COM_ADVPORTFOLIO_CONFIG_FIELD_SHOW_TITLE_DESC"
+		>
+			<option value="0">JHIDE</option>
+			<option value="1">JSHOW</option>
+		</field>
+
+		<field
+			name="show_description"
+			type="radio"
+			class="btn-group"
+			default="1"
+			label="COM_ADVPORTFOLIO_CONFIG_FIELD_SHOW_DESCRIPTION_LABEL"
+			description="COM_ADVPORTFOLIO_CONFIG_FIELD_SHOW_DESCRIPTION_DESC"
+		>
+			<option value="0">JHIDE</option>
+			<option value="1">JSHOW</option>
+		</field>
+
+		<field
+			name="description_position"
+			type="list"
+			default="right"
+			label="COM_ADVPORTFOLIO_CONFIG_FIELD_DESCRIPTION_POSITION_LABEL"
+			description="COM_ADVPORTFOLIO_CONFIG_FIELD_DESCRIPTION_POSITION_DESC"
+		>
+			<option value="top">COM_ADVPORTFOLIO_CONFIG_FIELD_DESCRIPTION_POSITION_TOP</option>
+			<option value="right">COM_ADVPORTFOLIO_CONFIG_FIELD_DESCRIPTION_POSITION_RIGHT</option>
+			<option value="bottom">COM_ADVPORTFOLIO_CONFIG_FIELD_DESCRIPTION_POSITION_BOTTOM</option>
+			<option value="left">COM_ADVPORTFOLIO_CONFIG_FIELD_DESCRIPTION_POSITION_LEFT</option>
+		</field>
+
+		<field
+			name="description_width"
+			type="list"
+			default="4"
+			label="COM_ADVPORTFOLIO_CONFIG_FIELD_DESCRIPTION_WIDTH_LABEL"
+			description="COM_ADVPORTFOLIO_CONFIG_FIELD_DESCRIPTION_WIDTH_DESC"
+		>
+			<option value="1">1</option>
+			<option value="2">2</option>
+			<option value="3">3</option>
+			<option value="4">4</option>
+			<option value="5">5</option>
+			<option value="6">6</option>
+			<option value="7">7</option>
+			<option value="8">8</option>
+			<option value="9">9</option>
+			<option value="10">10</option>
+			<option value="11">11</option>
+		</field>
+
+		<field
+			name="show_noauth"
+			type="radio"
+			class="btn-group"
+			default="0"
+			label="JGLOBAL_SHOW_UNAUTH_LINKS_LABEL"
+			description="JGLOBAL_SHOW_UNAUTH_LINKS_DESC"
+		>
+			<option value="0">JNO</option>
+			<option value="1">JYES</option>
+		</field>
+	</fieldset>
+
+	<fieldset
+		name="projects"
+		label="COM_ADVPORTFOLIO_CONFIG_FIELDSET_PROJECTS_LABEL"
+		description="COM_ADVPORTFOLIO_CONFIG_FIELDSET_PROJECTS_DESC"
+	>
+		<field
+			name="projects_layout"
+			type="componentlayout"
+			label="COM_ADVPORTFOLIO_CONFIG_FIELD_PROJECTS_LAYOUT_LABEL"
+			description="COM_ADVPORTFOLIO_CONFIG_FIELD_PROJECTS_LAYOUT_DESC"
+			menuitems="true"
+			extension="com_advportfolio"
+			view="projects"
+		/>
+
+		<field
+			name="show_short_description"
+			type="radio"
+			class="btn-group"
+			default="1"
+			label="COM_ADVPORTFOLIO_CONFIG_FIELD_SHOW_SHORT_DESCRIPTION_LABEL"
+			description="COM_ADVPORTFOLIO_CONFIG_FIELD_SHOW_SHORT_DESCRIPTION_DESC"
+		>
+			<option value="0">JHIDE</option>
+			<option value="1">JSHOW</option>
+		</field>
+
+		<field
+			name="num_columns"
+			type="list"
+			label="COM_ADVPORTFOLIO_CONFIG_FIELD_NUM_COLUMNS_LABEL"
+			description="COM_ADVPORTFOLIO_CONFIG_FIELD_NUM_COLUMNS_DESC"
+			default="3"
+		>
+			<option value="2">J2</option>
+			<option value="3">J3</option>
+			<option value="4">J4</option>
+		</field>
+
+		<field
+			name="orderby"
+			type="list"
+			default="rdate"
+			label="COM_ADVPORTFOLIO_CONFIG_FIELD_ORDERBY_LABEL"
+			description="COM_ADVPORTFOLIO_CONFIG_FIELD_ORDERBY_DESC"
+		>
+			<option value="rdate">JGLOBAL_MOST_RECENT_FIRST</option>
+			<option value="date">JGLOBAL_OLDEST_FIRST</option>
+			<option value="alpha">JGLOBAL_TITLE_ALPHABETICAL</option>
+			<option value="ralpha">JGLOBAL_TITLE_REVERSE_ALPHABETICAL</option>
+			<option value="order">JGLOBAL_ARTICLE_MANAGER_ORDER</option>
+		</field>
+
+		<field
+			name="limit"
+			type="text"
+			default="20"
+			label="COM_ADVPORTFOLIO_CONFIG_FIELD_LIMIT_LABEL"
+			description="COM_ADVPORTFOLIO_CONFIG_FIELD_LIMIT_DESC"
+			labelclass="control-label"
+		/>
+
+		<field name="show_pagination"
+			type="list"
+			default="2"
+			label="JGLOBAL_PAGINATION_LABEL"
+			description="JGLOBAL_PAGINATION_DESC"
+		>
+			<option value="0">JHIDE</option>
+			<option value="1">JSHOW</option>
+			<option value="2">JGLOBAL_AUTO</option>
+		</field>
+
+		<field name="show_pagination_results"
+			type="radio"
+			class="btn-group"
+			default="1"
+			label="JGLOBAL_PAGINATION_RESULTS_LABEL"
+			description="JGLOBAL_PAGINATION_RESULTS_DESC"
+		>
+			<option value="0">JHIDE</option>
+			<option value="1">JSHOW</option>
+		</field>
+	</fieldset>
+
+	<fieldset
+		name="permissions"
+		description="JCONFIG_PERMISSIONS_DESC"
+		label="JCONFIG_PERMISSIONS_LABEL"
+	>
+		<field
+			name="rules"
+			type="rules"
+			component="com_advportfolio"
+			filter="rules"
+			validate="rules"
+			label="JCONFIG_PERMISSIONS_LABEL"
+			section="component"
+		/>
+	</fieldset>
+</config>
