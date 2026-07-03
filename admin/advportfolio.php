@@ -1,16 +1,18 @@
 <?php
 /**
- * @copyright	Copyright (c) 2013 Skyline Technology Ltd (http://extstore.com). All rights reserved.
- * @license		http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL
+ * @package     AdvPortfolio
+ * @subpackage  Admin
+ * @copyright   Copyright (C) 2026 Hekla Terriol. All rights reserved.
+ * @license     GNU General Public License version 2 or later
  */
 
 // No direct access.
 defined('_JEXEC') or die;
 
-use JoomlaCMSFactory;
-use JoomlaCMSLanguageText;
-use JoomlaCMSMVCControllerBaseController;
-use JoomlaCMSHelperContentHelper;
+use Joomla\CMS\Factory;
+use Joomla\CMS\Language\Text;
+use Joomla\CMS\MVC\Controller\BaseController;
+use Joomla\CMS\Helper\ContentHelper;
 
 // Access check.
 if (!Factory::getApplication()->getIdentity()->authorise('core.manage', 'com_advportfolio')) {
@@ -28,5 +30,5 @@ require_once JPATH_COMPONENT . '/helpers/factory.php';
 require_once JPATH_COMPONENT . '/helpers/imagelib.php';
 
 $controller = BaseController::getInstance('AdvPortfolio', ['default_view' => 'projects']);
-$controller->execute(Factory::getApplication()->getInput()->get('task'));
+$controller->execute(Factory::getApplication()->getInput()->getCmd('task'));
 $controller->redirect();

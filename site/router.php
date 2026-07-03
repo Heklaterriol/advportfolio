@@ -1,18 +1,18 @@
 <?php
 /**
- * @package     Joomla.Site
- * @subpackage  com_advportfolio
- *
- * @copyright   Copyright (C) 2005 - 2026 Open Source Matters, Inc. All rights reserved.
- * @license     GNU General Public License version 2 or later; see LICENSE.txt
+ * @package     AdvPortfolio
+ * @subpackage  Site
+ * @copyright   Copyright (C) 2026 Hekla Terriol. All rights reserved.
+ * @license     GNU General Public License version 2 or later
  */
 
+// No direct access.
 defined('_JEXEC') or die;
 
-use JoomlaCMSFactory;
-use JoomlaCMSCategoriesCategories;
-use JoomlaCMSComponentComponentHelper;
-use JoomlaCMSRouterRouter;
+use Joomla\CMS\Factory;
+use Joomla\CMS\Categories\Categories;
+use Joomla\CMS\Component\ComponentHelper;
+use Joomla\CMS\Router\Router;
 
 class AdvPortfolioRouter extends Router
 {
