@@ -6,65 +6,18 @@
  */
  -->
 
-<extension type="component" version="3.0" method="upgrade">
+<extension type="component" version="6.0" method="upgrade" xmlns="http://www.joomla.org/xsd/1.0/component">
 	<name>com_advportfolio</name>
 	<author>http://extstore.com</author>
 	<creationDate>January 2013</creationDate>
-	<copyright>(C) 2010 - 2013 Skyline Technology Ltd. All rights reserved.</copyright>
+	<copyright>(C) 2010 - 2026 Skyline Technology Ltd. All rights reserved.</copyright>
 	<license>http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL</license>
 	<authorEmail>admin@extstore.com</authorEmail>
 	<authorUrl>http://extstore.com</authorUrl>
-	<version>1.3.6</version>
+	<version>2.0.0</version>
 	<description>
 	<![CDATA[
-		<div class="well well-small" style="font-weight: normal; text-align: left; color: #333;">
-			<div class="module-title nav-header">
-				Advanced Portfolio
-			</div>
-			<div>
-				<table cellspacing="0" cellpadding="0" border="0" style="margin-bottom: 0" class="table table-striped">
-					<tr>
-						<td colspan="2">
-							<strong>Advanced Portfolio</strong> is an extension for Joomla! 3 developed by ExtStore Team. With clean theme, responsive design, it is a complete solution for anyone who wants to build portfolio pages on Joomla website.
-						</td>
-					</tr>
-					<tr>
-						<td>Version:</td>
-						<td>1.3.6</td>
-					</tr>
-					<tr>
-						<td>Author:</td>
-						<td><a href="http://extstore.com" target="_blank">extstore.com</a></td>
-					</tr>
-					<tr>
-						<td>Copyright:</td>
-						<td>&copy; Skyline Technology Ltd, All rights reserved.</td>
-					</tr>
-					<!--<tr>
-						<td>Document:</td>
-						<td><a href="" target="_blank">Read document</a></td>
-					</tr>-->
-					<tr>
-						<td>Support:</td>
-						<td>
-							<a href="http://support.extstore.com" target="_blank">Contact us or submit a ticket</a>
-						</td>
-					</tr>
-					<!--<tr>
-						<td>JED:</td>
-						<td><a href="" target="_blank">Vote and write review on JED</a></td>
-					</tr>-->
-					<tr>
-						<td>Facebook:</td>
-						<td><a href="http://facebook.com/extstore" target="_blank">http://facebook.com/extstore</a></td>
-					</tr>
-					<tr>
-						<td>Twitter:</td>
-						<td><a href="http://twitter.com/extstore" target="_blank">http://twitter.com/extstore</a></td>
-					</tr>
-				</table>
-			</div>
-		</div>
+		Advanced Portfolio is a complete solution for building portfolio pages on Joomla websites. Now fully compatible with Joomla 6 and PHP 8.4+.
 	]]>
 	</description>
 
@@ -72,13 +25,13 @@
 
 	<install> <!-- Runs on install -->
 		<sql>
-			<file driver="mysql" charset="utf8">sql/install.mysql.utf8.sql</file>
+			<file driver="mysql" charset="utf8mb4">admin/sql/install.mysql.utf8mb4.sql</file>
 		</sql>
 	</install>
 
 	<uninstall> <!-- Runs on uninstall -->
 		<sql>
-			<file driver="mysql" charset="utf8">sql/uninstall.mysql.utf8.sql</file>
+			<file driver="mysql" charset="utf8mb4">admin/sql/uninstall.mysql.utf8mb4.sql</file>
 		</sql>
 	</uninstall>
 	
@@ -108,9 +61,8 @@
 	<administration>
 		<menu>com_advportfolio</menu>
 		<submenu>
-			<menu link="option=com_advportfolio&amp;view=projects" view="projects">com_advportfolio_submenu_projects</menu>
-			<menu link="option=com_categories&amp;extension=com_advportfolio" view="categories" alt="Advanced Portfolio/Categories">com_advportfolio_submenu_categories</menu>
-			
+			<menu link="option=com_advportfolio&amp;view=projects" view="projects">COM_ADVPORTFOLIO_SUBMENU_PROJECTS</menu>
+			<menu link="option=com_categories&amp;extension=com_advportfolio" view="categories" alt="Advanced Portfolio/Categories">COM_ADVPORTFOLIO_SUBMENU_CATEGORIES</menu>
 		</submenu>
 
 		<files folder="admin">
@@ -132,5 +84,6 @@
 			<language tag="en-GB">language/en-GB.com_advportfolio.sys.ini</language>
 		</languages>
 	</administration>
+	
+	<namespace path="src">AdvPortfolio</namespace>
 </extension>
-
