@@ -1,92 +1,89 @@
 /**
- * @copyright	Copyright (c) 2013 Skyline Technology Ltd (http://extstore.com). All rights reserved.
- * @license		http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL
+ * Advanced Portfolio Admin Script
+ * @copyright  Copyright (c) 2013 Skyline Technology Ltd (http://extstore.com). All rights reserved.
+ * @license    GNU/GPL (http://www.gnu.org/licenses/gpl-2.0.html)
  */
 
-if (!Skyline) {
-	var Skyline = {};
-}
+(function() {
+    'use strict';
+    document.addEventListener('DOMContentLoaded', function() {
+        initTooltips();
+        initChosen();
+        initDropdowns();
+    });
 
-Skyline.AdvPortfolio = {
-	/**
-	 * Image.
-	 */
-	image: {
-		count:			0,
-		initialized:	false,
+    function initTooltips() {
+        var tooltips = document.querySelectorAll('.hasTooltip');
+        tooltips.forEach(function(element) {
+            var title = element.getAttribute('title');
+            if (title) {
+                element.addEventListener('mouseenter', function() { showTooltip(element, title); });
+                element.addEventListener('mouseleave', function() { hideTooltip(); });
+            }
+        });
+    }
 
-		/**
-		 * Initialize.
-		 */
-		init: function() {
-			if (Skyline.AdvPortfolio.image.initialized) {
-				return;
-			}
+    function showTooltip(element, text) {
+        var tooltip = document.createElement('div');
+        tooltip.className = 'tooltip fade in';
+        tooltip.textContent = text;
+        tooltip.style.position = 'absolute';
+        tooltip.style.backgroundColor = '#333';
+        tooltip.style.color = '#fff';
+        tooltip.style.padding = '5px 10px';
+        tooltip.style.borderRadius = '3px';
+        tooltip.style.zIndex = '1000';
+        tooltip.style.fontSize = '12px';
+        var rect = element.getBoundingClientRect();
+        tooltip.style.top = (rect.top + window.scrollY - tooltip.offsetHeight - 5) + 'px';
+        tooltip.style.left = (rect.left + window.scrollX + (rect.width - tooltip.offsetWidth) / 2) + 'px';
+        document.body.appendChild(tooltip);
+        element._tooltip = tooltip;
+    }
 
-			Skyline.AdvPortfolio.image.initialized = true;
+    function hideTooltip() {
+        var tooltips = document.querySelectorAll('.tooltip');
+        tooltips.forEach(function(tooltip) { tooltip.remove(); });
+    }
 
-			jQuery('.image-clear').click(function() {
-				Skyline.AdvPortfolio.image.clear(this);
-			});
-		},
+    function initChosen() {
+        if (typeof jQuery !== 'undefined' && jQuery.fn.chosen) {
+            jQuery('select.chzn-select').chosen();
+        }
+    }
 
-		/**
-		 * Select image from modal.
-		 */
-		select: function(id, imageName, preview) {
-			parent.jQuery.fancybox.close();
-			$el	= jQuery('#' + id)
-			if ($el.val() != imageName) {
-				if ($el.val() == '' && $el.parents('#jform_images_container').length) {
-					Skyline.AdvPortfolio.image.add();
-				}
+    function initDropdowns() {
+        if (typeof jQuery !== 'undefined' && jQuery.fn.dropdown) {
+            jQuery('.dropdown-toggle').dropdown();
+        }
+    }
 
-				$el.val(imageName);
-				$el.siblings('.image-preview').hide().html('<img src="' + preview + '" alt="' + imageName + '" class="img-polaroid" />').show('slide');
-			}
-		},
+    window.Joomla = window.Joomla || {};
+    window.Joomla.submitbutton = function(task, form) {
+        if (task === 'project.cancel' || (typeof document.formvalidator !== 'undefined' && document.formvalidator.isValid(form))) {
+            Joomla.submitform(task, form);
+        }
+    };
 
-		initList: function() {
-			Skyline.AdvPortfolio.image.init();
-			Skyline.AdvPortfolio.image.add();
+    window.Joomla.submitform = function(task, form) {
+        if (typeof form === 'string') { form = document.getElementById(form); }
+        if (!form) { return false; }
+        var taskInput = document.createElement('input');
+        taskInput.type = 'hidden';
+        taskInput.name = 'task';
+        taskInput.value = task;
+        form.appendChild(taskInput);
+        form.submit();
+        return true;
+    };
 
-			jQuery('.images-container').sortable({
-				'handle':	'.image-sortable'
-			});
-		},
-
-		refresh: function() {
-			jQuery('#jform_images_container .image-clear').unbind('click').click(function() {
-				if (jQuery('#jform_images_container > li').length > 1 && jQuery(this).siblings('.image-input').val() != '') {
-					jQuery(this).parents('li').hide('slide', function() {
-						jQuery(this).remove();
-					});
-				} else {
-					Skyline.AdvPortfolio.image.clear(this);
-				}
-			});
-		},
-
-		/**
-		 * Add an image.
-		 */
-		add: function() {
-			var id = Skyline.AdvPortfolio.image.count++;
-
-			jQuery('<li><div class="image-sortable"></div><div class="image-container"><input type="hidden" id="jform_images_' + id + '_image" name="jform[images][image][]" class="image-input" /><a href="index.php?option=com_advportfolio&amp;view=imagehandler&amp;tmpl=component&amp;image_id=jform_images_' + id + '_image" data-fancybox-type="iframe" class="sl_modal image-select btn"><i class="icon-pictures"></i> Select</a> <a href="javascript:void(0);" class="btn image-clear"><i class="icon-remove"></i> Clear</a><div class="image-title"><input type="text" name="jform[images][title][]" placeholder="Image Title" /></div><div class="image-preview" style="display:none;"></div></div></li>').appendTo('#jform_images_container').hide().show('slide');
-			Skyline.AdvPortfolio.image.refresh();
-		},
-
-		/**
-		 * Clear image.
-		 */
-		clear: function(id) {
-			$id = jQuery(id);
-			$id.siblings('.image-input').val('');
-			$id.siblings('.image-title').children('input').val('');
-			$id.siblings('.image-preview').hide('slide', function() {
-				jQuery(this).html('');
-			});
-		}
-	}
-};
+    window.Joomla.checkAll = function(element) {
+        var form = element.form;
+        if (!form) { return; }
+        var checkboxes = form.querySelectorAll('input[name^="cid"]');
+        var checked = element.checked;
+        checkboxes.forEach(function(cb) { cb.checked = checked; });
+        var boxchecked = form.querySelector('input[name="boxchecked"]');
+        if (boxchecked) { boxchecked.value = checked ? checkboxes.length : 0; }
+    };
+})();

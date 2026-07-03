@@ -1,163 +1,22 @@
-/**
- * @copyright	Copyright (c) 2013 Skyline Technology Ltd (http://extstore.com). All rights reserved.
- * @license		http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL
- */
-
-.sl_copyright {
-	clear: both;
-	color: #666666;
-	margin-bottom: 0;
-	padding-bottom: 10px;
-	padding-top: 20px;
-	text-align: center;
-	text-shadow: 0 1px 1px #DDDDDD;
-	font-size: 12px;
-}
-
-.sl_title {
-	background: #AAA;
-	color: #FFF;
-	text-shadow: 0 1px 1px #888888;
-	font-weight: bold;
-	border-radius: 3px;
-	padding: 5px;
-}
-
-#cpanel {
-    clear: both;
-    min-height: 150px;
-    overflow: hidden;
-    padding-top: 12px;
-}
-
-#cpanel a {
-    display: block;
-    float: left;
-    height: 100px;
-    padding: 15px;
-    text-align: center;
-    width: 80px;
-}
-
-#sidebar #submenu a[href*="com_advportfolio&view=dashboard"]:before {
-    content: "! ";
-    font-family: IcoMoon;
-}
-
-#sidebar #submenu a[href*="com_advportfolio&view=projects"]:before {
-    content: "/ ";
-    font-family: IcoMoon;
-}
-
-#sidebar #submenu a[href*="com_categories&extension=com_advportfolio"]:before {
-    content: "- ";
-    font-family: IcoMoon;
-}
-
-#sidebar #submenu a[href*="com_advportfolio&view=tags"]:before {
-    content: "X ";
-    font-family: IcoMoon;
-}
-
-#tagList tr {
-	height: 40px;
-}
-
-#ftp-form ul {
-	padding-top: 10px;
-}
-
-#ftp-form ul label {
-	min-width: 100px;
-}
-
-#upload-form input {
-	float: none;
-}
-
-a.delete-button {
-	display: block;
-	text-indent: -999em;
-	background: url(../images/delete.png) no-repeat center;
-	line-height: 16px;
-}
-
-div.imageborder {
-	height: 72px;
-	vertical-align: middle;
-	width: 88px;
-	overflow: hidden;
-}
-
-div.imagecontrol {
-	text-align: center;
-	height: 20px;
-	line-height: 20px;
-	background: #f9fcf9;
-	border-top: 1px solid #ddd;
-}
-
-div.imagecontrol .delete-button {
-	float: right;
-	width: 16px;
-	height: 16px;
-	margin-top: 2px;
-}
-
-div.imageinfo {
-	background: #f9f9f9;
-	font-family: Arial, Helvetica, sans-serif;
-	font-size: 10px;
-	width: 88px;
-	height: 15px;
-	vertical-align: middle;
-	text-align: center;
-	overflow: hidden;
-	clear: both;
-}
-
-.image-preview {
-	margin-top: 10px;
-	margin-bottom: 0;
-}
-
-.images-container {
-	margin: 0;
-}
-
-.images-container li {
-	list-style: none;
-	position: relative;
-	margin-bottom: 30px;
-	display: block;
-	float: left;
-	width: 300px;
-}
-
-.images-container .image-sortable {
-	position: absolute;
-	width: 14px;
-	top: 0;
-	bottom: 0;
-	background-color: #999;
-	background-image: linear-gradient(45deg, rgba(255, 255, 255, .2) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, .2) 50%, rgba(255, 255, 255, .2) 75%, transparent 75%, transparent);
-	background-image: -o-linear-gradient(45deg, rgba(255, 255, 255, .2) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, .2) 50%, rgba(255, 255, 255, .2) 75%, transparent 75%, transparent);
-	background-image: -moz-linear-gradient(45deg, rgba(255, 255, 255, .2) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, .2) 50%, rgba(255, 255, 255, .2) 75%, transparent 75%, transparent);
-	background-image: -webkit-linear-gradient(45deg, rgba(255, 255, 255, .2) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, .2) 50%, rgba(255, 255, 255, .2) 75%, transparent 75%, transparent);
-	background-image: -ms-linear-gradient(45deg, rgba(255, 255, 255, .2) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, .2) 50%, rgba(255, 255, 255, .2) 75%, transparent 75%, transparent);
-	border-radius: 10px;
-	cursor: move;
-}
-
-.images-container .image-sortable:hover {
-	background-color: #33bbde;
-}
-
-.images-container .image-container {
-	margin-left: 22px;
-}
-
-.image-title {
-	margin-top: 10px;
-	margin-bottom: 5px;
-}
+/* Advanced Portfolio Admin Styles */
+#j-main-container { padding: 20px; }
+.table-striped tr:nth-child(even) { background-color: #f9f9f9; }
+.table-striped tr:nth-child(odd) { background-color: #fff; }
+.btn { padding: 6px 12px; margin-bottom: 0; font-size: 14px; font-weight: 400; line-height: 1.42857143; text-align: center; white-space: nowrap; vertical-align: middle; cursor: pointer; border: 1px solid transparent; border-radius: 4px; }
+.btn-primary { color: #fff; background-color: #007bff; border-color: #007bff; }
+.btn-primary:hover { background-color: #0069d9; border-color: #0062cc; }
+#filter-bar { margin-bottom: 20px; }
+#filter-bar .btn-group { margin-right: 10px; }
+.form-horizontal .control-label { padding-top: 7px; margin-bottom: 0; text-align: right; }
+.form-horizontal .controls { margin-left: 160px; }
+.hasTooltip { border-bottom: 1px dotted #000; cursor: help; }
+.card { border: 1px solid #e3e3e3; border-radius: 4px; margin-bottom: 20px; box-shadow: 0 1px 2px rgba(0,0,0,0.05); }
+.card-header { padding: 15px; border-bottom: 1px solid #e3e3e3; background-color: #f5f5f5; border-radius: 4px 4px 0 0; }
+.card-header h3 { margin: 0; font-size: 16px; }
+.card-body { padding: 15px; }
+.dropzone { border: 2px dashed #0087F7; border-radius: 5px; background: white; min-height: 100px; padding: 20px; text-align: center; cursor: pointer; }
+.dropzone .dz-message { margin: 20px 0; }
+.dropzone .dz-message-text { font-size: 18px; font-weight: bold; }
+.dropzone .dz-message-or { margin: 0 10px; font-size: 14px; color: #999; }
+.dropzone .dz-message-button { padding: 8px 16px; background: #0087F7; color: white; border: none; border-radius: 4px; cursor: pointer; }
+@media (max-width: 768px) { .hidden-phone { display: none !important; } .span10 { width: 100%; } .span2 { width: 100%; } }
