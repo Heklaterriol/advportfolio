@@ -1,4 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--
+/**
+ * @copyright	Copyright (c) 2013 Skyline Technology Ltd (http://extstore.com). All rights reserved.
+ * @license		http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL
+ */
+ -->
+
 <access component="com_advportfolio">
 	<section name="component">
 		<action name="core.admin" title="JACTION_ADMIN" description="JACTION_ADMIN_COMPONENT_DESC" />
@@ -9,11 +16,23 @@
 		<action name="core.edit.state" title="JACTION_EDITSTATE" description="JACTION_EDITSTATE_COMPONENT_DESC" />
 		<action name="core.edit.own" title="JACTION_EDITOWN" description="JACTION_EDITOWN_COMPONENT_DESC" />
 	</section>
+	<section name="project">
+		<action name="core.create" title="COM_ADVPORTFOLIO_ACTION_CREATE_PROJECT" description="COM_ADVPORTFOLIO_ACTION_CREATE_PROJECT_DESC" />
+		<action name="core.delete" title="COM_ADVPORTFOLIO_ACTION_DELETE_PROJECT" description="COM_ADVPORTFOLIO_ACTION_DELETE_PROJECT_DESC" />
+		<action name="core.edit" title="COM_ADVPORTFOLIO_ACTION_EDIT_PROJECT" description="COM_ADVPORTFOLIO_ACTION_EDIT_PROJECT_DESC" />
+		<action name="core.edit.state" title="COM_ADVPORTFOLIO_ACTION_EDITSTATE_PROJECT" description="COM_ADVPORTFOLIO_ACTION_EDITSTATE_PROJECT_DESC" />
+		<action name="core.edit.own" title="COM_ADVPORTFOLIO_ACTION_EDITOWN_PROJECT" description="COM_ADVPORTFOLIO_ACTION_EDITOWN_PROJECT_DESC" />
+	</section>
 	<section name="category">
-		<action name="core.create" title="JACTION_CREATE" description="COM_CATEGORIES_ACCESS_CREATE_DESC" />
-		<action name="core.delete" title="JACTION_DELETE" description="COM_CATEGORIES_ACCESS_DELETE_DESC" />
-		<action name="core.edit" title="JACTION_EDIT" description="COM_CATEGORIES_ACCESS_EDIT_DESC" />
-		<action name="core.edit.state" title="JACTION_EDITSTATE" description="COM_CATEGORIES_ACCESS_EDITSTATE_DESC" />
-		<action name="core.edit.own" title="JACTION_EDITOWN" description="COM_CATEGORIES_ACCESS_EDITOWN_DESC" />
+		<action name="core.create" title="COM_ADVPORTFOLIO_ACTION_CREATE_CATEGORY" description="COM_ADVPORTFOLIO_ACTION_CREATE_CATEGORY_DESC" />
+		<action name="core.delete" title="COM_ADVPORTFOLIO_ACTION_DELETE_CATEGORY" description="COM_ADVPORTFOLIO_ACTION_DELETE_CATEGORY_DESC" />
+		<action name="core.edit" title="COM_ADVPORTFOLIO_ACTION_EDIT_CATEGORY" description="COM_ADVPORTFOLIO_ACTION_EDIT_CATEGORY_DESC" />
+		<action name="core.edit.state" title="COM_ADVPORTFOLIO_ACTION_EDITSTATE_CATEGORY" description="COM_ADVPORTFOLIO_ACTION_EDITSTATE_CATEGORY_DESC" />
+		<action name="core.edit.own" title="COM_ADVPORTFOLIO_ACTION_EDITOWN_CATEGORY" description="COM_ADVPORTFOLIO_ACTION_EDITOWN_CATEGORY_DESC" />
+	</section>
+	<section name="image">
+		<action name="core.upload" title="COM_ADVPORTFOLIO_ACTION_UPLOAD_IMAGE" description="COM_ADVPORTFOLIO_ACTION_UPLOAD_IMAGE_DESC" />
+		<action name="core.delete" title="COM_ADVPORTFOLIO_ACTION_DELETE_IMAGE" description="COM_ADVPORTFOLIO_ACTION_DELETE_IMAGE_DESC" />
+		<action name="core.edit" title="COM_ADVPORTFOLIO_ACTION_EDIT_IMAGE" description="COM_ADVPORTFOLIO_ACTION_EDIT_IMAGE_DESC" />
 	</section>
 </access>

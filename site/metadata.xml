@@ -1,3 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--
+/**
+ * @copyright	Copyright (c) 2013 Skyline Technology Ltd (http://extstore.com). All rights reserved.
+ * @license		http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL
+ */
+ -->
+
 <metadata>
+	<layout title="COM_ADVPORTFOLIO_PROJECTS_DEFAULT_LAYOUT">
+		<message>COM_ADVPORTFOLIO_PROJECTS_DEFAULT_LAYOUT_DESC</message>
+	</layout>
+	<layout title="COM_ADVPORTFOLIO_PROJECTS_GRID_LAYOUT">
+		<message>COM_ADVPORTFOLIO_PROJECTS_GRID_LAYOUT_DESC</message>
+	</layout>
+	<layout title="COM_ADVPORTFOLIO_PROJECTS_MASONRY_LAYOUT">
+		<message>COM_ADVPORTFOLIO_PROJECTS_MASONRY_LAYOUT_DESC</message>
+	</layout>
 </metadata>
