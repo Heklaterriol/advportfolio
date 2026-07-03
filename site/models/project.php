@@ -1,15 +1,17 @@
 <?php
 /**
- * @copyright    Copyright (c) 2013 Skyline Technology Ltd (http://extstore.com). All rights reserved.
- * @license        http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL
+ * @package     AdvPortfolio
+ * @subpackage  Site.Models
+ * @copyright   Copyright (C) 2026 Hekla Terriol. All rights reserved.
+ * @license     GNU General Public License version 2 or later
  */
 
 // No direct access.
 defined('_JEXEC') or die;
 
-use JoomlaCMSMVCModelItemModel;
-use JoomlaCMSFactory;
-use JoomlaCMSHelperTagsHelper;
+use Joomla\CMS\MVC\Model\ItemModel;
+use Joomla\CMS\Factory;
+use Joomla\CMS\Helper\TagsHelper;
 
 class AdvPortfolioModelProject extends ItemModel
 {

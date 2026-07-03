@@ -1,20 +1,22 @@
 <?php
 /**
- * @copyright	Copyright (c) 2013 Skyline Technology Ltd (http://extstore.com). All rights reserved.
- * @license		http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL
+ * @package     AdvPortfolio
+ * @subpackage  Install
+ * @copyright   Copyright (C) 2026 Hekla Terriol. All rights reserved.
+ * @license     GNU General Public License version 2 or later
  */
 
 // No direct access.
 defined('_JEXEC') or die;
 
-use JoomlaCMSTableTable;
-use JoomlaCMSFactory;
+use Joomla\CMS\Table\Table;
+use Joomla\CMS\Factory;
 
 /**
  * Advanced Portfolio Installer Script
  *
- * @package		Joomla.Install
- * @subpakage	AdvPortfolio
+ * @package     Joomla.Install
+ * @subpackage  AdvPortfolio
  */
 class Com_AdvPortfolioInstallerScript
 {
@@ -22,9 +24,10 @@ class Com_AdvPortfolioInstallerScript
 	/**
 	 * Install.
 	 *
-	 * @param	$parent
+	 * @param   object  $parent  Parent installer object
 	 */
-	public function install($parent) {
+	public function install($parent)
+	{
 		$table = Table::getInstance('contenttype');
 
 		if ($table) {

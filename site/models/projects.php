@@ -1,16 +1,19 @@
 <?php
 /**
- * @copyright    Copyright (c) 2013 Skyline Technology Ltd (http://extstore.com). All rights reserved.
- * @license        http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL
+ * @package     AdvPortfolio
+ * @subpackage  Site.Models
+ * @copyright   Copyright (C) 2026 Hekla Terriol. All rights reserved.
+ * @license     GNU General Public License version 2 or later
  */
 
 // No direct access.
 defined('_JEXEC') or die;
 
-use JoomlaCMSMVCModelListModel;
-use JoomlaCMSFactory;
-use JoomlaCMSLanguageLanguageHelper;
-use JoomlaCMSHelperTagsHelper;
+use Joomla\CMS\MVC\Model\ListModel;
+use Joomla\CMS\Factory;
+use Joomla\CMS\Language\LanguageHelper;
+use Joomla\CMS\Helper\TagsHelper;
+use Joomla\Registry\Registry;
 
 class AdvPortfolioModelProjects extends ListModel
 {
@@ -33,7 +36,7 @@ class AdvPortfolioModelProjects extends ListModel
 	{
 		$app = Factory::getApplication();
 		$params = $app->getParams();
-		$menuParams = new JoomlaRegistryRegistry;
+		$menuParams = new Registry;
 		if ($menu = $app->getMenu()->getActive()) {
 			$menuParams->loadString($menu->params);
 		}
@@ -67,7 +70,7 @@ class AdvPortfolioModelProjects extends ListModel
 		$db = $this->getDatabase();
 		$query = $db->getQuery(true);
 		$query->select($this->getState('list.select', 'a.id, a.title, a.alias, a.checked_out, a.checked_out_time, a.catid, a.state, a.access, a.ordering, a.language, a.created, a.short_description, a.thumbnail, a.link'));
-		$query->select('CASE WHEN CHAR_LENGTH(a.alias) THEN CONCAT_WS(':', a.id, a.alias) ELSE a.id END AS slug');
+		$query->select('CASE WHEN CHAR_LENGTH(a.alias) THEN CONCAT_WS(":", a.id, a.alias) ELSE a.id END AS slug');
 		$query->from('#__advportfolio_projects AS a');
 		$query->select('c.title AS category_title');
 		$query->join('LEFT', '#__categories AS c ON c.id = a.catid');
