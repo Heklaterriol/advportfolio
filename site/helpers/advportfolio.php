@@ -7,6 +7,7 @@
 // No direct access.
 defined('_JEXEC') or die;
 
+use JoomlaCMSFactory;
 use JoomlaCMSMVCModelBaseDatabaseModel;
 use JoomlaCMSHelperStringHelper;
 
@@ -26,7 +27,9 @@ class AdvPortfolioHelper
 					$item = new stdClass();
 					$item->image = $value['image'][$i];
 					$item->title = $value['title'][$i];
-					if ($item->image) { $items[] = $item; }
+					if ($item->image) {
+						$items[] = $item;
+					}
 				}
 			}
 		} elseif (is_object($value)) {
@@ -35,7 +38,9 @@ class AdvPortfolioHelper
 					$item = new stdClass();
 					$item->image = $value->image[$i];
 					$item->title = $value->title[$i];
-					if ($item->image) { $items[] = $item; }
+					if ($item->image) {
+						$items[] = $item;
+					}
 				}
 			}
 		}
@@ -44,12 +49,22 @@ class AdvPortfolioHelper
 
 	public static function renderImage($image, $width = null, $alt = null, $title = null)
 	{
-		if (empty($image)) { return ''; }
+		if (empty($image)) {
+			return '';
+		}
 		$imagePath = $image;
 		$attributes = [];
-		if ($width) { $attributes['width'] = (int) $width; }
-		if ($alt) { $attributes['alt'] = $alt; } else { $attributes['alt'] = ''; }
-		if ($title) { $attributes['title'] = $title; }
+		if ($width) {
+			$attributes['width'] = (int) $width;
+		}
+		if ($alt) {
+			$attributes['alt'] = $alt;
+		} else {
+			$attributes['alt'] = '';
+		}
+		if ($title) {
+			$attributes['title'] = $title;
+		}
 		$html = '<img src="' . htmlspecialchars($imagePath, ENT_QUOTES, 'UTF-8') . '"';
 		foreach ($attributes as $key => $value) {
 			$html .= ' ' . $key . '="' . htmlspecialchars($value, ENT_QUOTES, 'UTF-8') . '"';

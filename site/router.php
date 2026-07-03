@@ -2,8 +2,9 @@
 /**
  * @package     Joomla.Site
  * @subpackage  com_advportfolio
+ *
  * @copyright   Copyright (C) 2005 - 2026 Open Source Matters, Inc. All rights reserved.
- * @license     GNU General Public License version 2 or later
+ * @license     GNU General Public License version 2 or later; see LICENSE.txt
  */
 
 defined('_JEXEC') or die;
@@ -11,8 +12,9 @@ defined('_JEXEC') or die;
 use JoomlaCMSFactory;
 use JoomlaCMSCategoriesCategories;
 use JoomlaCMSComponentComponentHelper;
+use JoomlaCMSRouterRouter;
 
-class AdvPortfolioRouter extends JoomlaCMSRouterRouter
+class AdvPortfolioRouter extends Router
 {
 	public function build(&$query)
 	{
@@ -21,7 +23,11 @@ class AdvPortfolioRouter extends JoomlaCMSRouterRouter
 		$menu = $app->getMenu();
 		$params = ComponentHelper::getParams('com_advportfolio');
 		$advanced = $params->get('sef_advanced_link', 0);
-		$menuItem = empty($query['Itemid']) ? $menu->getActive() : $menu->getItem($query['Itemid']);
+		if (empty($query['Itemid'])) {
+			$menuItem = $menu->getActive();
+		} else {
+			$menuItem = $menu->getItem($query['Itemid']);
+		}
 		$mView = (empty($menuItem->query['view'])) ? null : $menuItem->query['view'];
 		$mId = (empty($menuItem->query['id'])) ? null : $menuItem->query['id'];
 		if (isset($query['view'])) {
@@ -29,15 +35,23 @@ class AdvPortfolioRouter extends JoomlaCMSRouterRouter
 			if (empty($query['Itemid']) || empty($menuItem) || $menuItem->component != 'com_advportfolio') {
 				$segments[] = $query['view'];
 			}
-			if ($view != 'form') { unset($query['view']); }
+			if ($view != 'form') {
+				unset($query['view']);
+			}
 		}
-		if (isset($query['view']) && ($mView == $query['view']) && isset($query['id']) && ($mId == (int) $query['id'])) {
-			unset($query['view']); unset($query['catid']); unset($query['id']);
+		if (isset($query['view']) && ($mView == $query['view']) && (isset($query['id'])) && ($mId == (int) $query['id'])) {
+			unset($query['view']);
+			unset($query['catid']);
+			unset($query['id']);
 			return $segments;
 		}
 		if (isset($view) && ($view == 'category' || $view == 'project')) {
 			if ($mId != (int) $query['id'] || $mView != $view) {
-				$catid = ($view == 'project' && isset($query['catid'])) ? $query['catid'] : (isset($query['id']) ? $query['id'] : 0);
+				if ($view == 'project' && isset($query['catid'])) {
+					$catid = $query['catid'];
+				} elseif (isset($query['id'])) {
+					$catid = $query['id'];
+				}
 				$menuCatid = $mId;
 				$categories = Categories::getInstance(['extension' => 'com_advportfolio']);
 				$category = $categories->get($catid);
@@ -46,24 +60,37 @@ class AdvPortfolioRouter extends JoomlaCMSRouterRouter
 					$path = array_reverse($path);
 					$array = [];
 					foreach ($path as $id) {
-						if ((int) $id == (int) $menuCatid) { break; }
-						if ($advanced) { list($tmp, $id) = explode(':', $id, 2); }
+						if ((int) $id == (int) $menuCatid) {
+							break;
+						}
+						if ($advanced) {
+							list($tmp, $id) = explode(':', $id, 2);
+						}
 						$array[] = $id;
 					}
 					$segments = array_merge($segments, array_reverse($array));
 				}
 				if ($view == 'project') {
-					if ($advanced) { list($tmp, $id) = explode(':', $query['id'], 2); } else { $id = $query['id']; }
+					if ($advanced) {
+						list($tmp, $id) = explode(':', $query['id'], 2);
+					} else {
+						$id = $query['id'];
+					}
 					$segments[] = $id;
 				}
 			}
-			unset($query['id']); unset($query['catid']);
+			unset($query['id']);
+			unset($query['catid']);
 		}
 		if (isset($query['layout'])) {
 			if (!empty($query['Itemid']) && isset($menuItem->query['layout'])) {
-				if ($query['layout'] == $menuItem->query['layout']) { unset($query['layout']); }
+				if ($query['layout'] == $menuItem->query['layout']) {
+					unset($query['layout']);
+				}
 			} else {
-				if ($query['layout'] == 'default') { unset($query['layout']); }
+				if ($query['layout'] == 'default') {
+					unset($query['layout']);
+				}
 			}
 		}
 		$total = count($segments);
@@ -110,7 +137,11 @@ class AdvPortfolioRouter extends JoomlaCMSRouterRouter
 			if ($found == 0) {
 				if ($advanced) {
 					$db = Factory::getContainer()->get('DatabaseDriver');
-					$query = $db->getQuery(true)->select($db->quoteName('id'))->from('#__advportfolio_projects')->where($db->quoteName('catid') . ' = ' . (int) $vars['catid'])->where($db->quoteName('alias') . ' = ' . $db->quote(str_replace(':', '-', $segment)));
+					$query = $db->getQuery(true)
+						->select($db->quoteName('id'))
+						->from('#__advportfolio_projects')
+						->where($db->quoteName('catid') . ' = ' . (int) $vars['catid'])
+						->where($db->quoteName('alias') . ' = ' . $db->quote(str_replace(':', '-', $segment)));
 					$db->setQuery($query);
 					$id = $db->loadResult();
 				} else {
@@ -125,5 +156,11 @@ class AdvPortfolioRouter extends JoomlaCMSRouterRouter
 		return $vars;
 	}
 }
-function AdvPortfolioBuildRoute(&$query) { $router = new AdvPortfolioRouter; return $router->build($query); }
-function AdvPortfolioParseRoute($segments) { $router = new AdvPortfolioRouter; return $router->parse($segments); }
+function AdvPortfolioBuildRoute(&$query) {
+	$router = new AdvPortfolioRouter;
+	return $router->build($query);
+}
+function AdvPortfolioParseRoute($segments) {
+	$router = new AdvPortfolioRouter;
+	return $router->parse($segments);
+}
