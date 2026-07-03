@@ -1,18 +1,20 @@
 <?php
 /**
- * @copyright    Copyright (c) 2013 Skyline Technology Ltd (http://extstore.com). All rights reserved.
- * @license        http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL
+ * @package     AdvPortfolio
+ * @subpackage  Admin.Tables
+ * @copyright   Copyright (C) 2026 Hekla Terriol. All rights reserved.
+ * @license     GNU General Public License version 2 or later
  */
 
 // No direct access.
 defined('_JEXEC') or die;
 
-use JoomlaCMSTableTable;
-use JoomlaCMSFactory;
-use JoomlaCMSLanguageText;
-use JoomlaCMSHelperStringHelper;
-use JoomlaCMSHelperTagsHelper;
-use JoomlaRegistryRegistry;
+use Joomla\CMS\Table\Table;
+use Joomla\CMS\Factory;
+use Joomla\CMS\Language\Text;
+use Joomla\CMS\Helper\StringHelper;
+use Joomla\CMS\Helper\TagsHelper;
+use Joomla\Registry\Registry;
 
 class AdvPortfolioTableProject extends Table
 {

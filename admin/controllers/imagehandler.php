@@ -1,17 +1,19 @@
 <?php
 /**
- * @copyright	Copyright (c) 2013 Skyline Technology Ltd (http://extstore.com). All rights reserved.
- * @license		http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL
+ * @package     AdvPortfolio
+ * @subpackage  Admin.Controllers
+ * @copyright   Copyright (C) 2026 Hekla Terriol. All rights reserved.
+ * @license     GNU General Public License version 2 or later
  */
 
 // No direct access.
 defined('_JEXEC') or die;
 
-use JoomlaCMSMVCControllerBaseController;
-use JoomlaCMSFactory;
-use JoomlaCMSLanguageText;
-use JoomlaCMSRouterRoute;
-use JoomlaCMSResponseJsonResponse;
+use Joomla\CMS\MVC\Controller\BaseController;
+use Joomla\CMS\Factory;
+use Joomla\CMS\Language\Text;
+use Joomla\CMS\Router\Route;
+use Joomla\CMS\Response\JsonResponse;
 
 class AdvPortfolioControllerImageHandler extends BaseController
 {
