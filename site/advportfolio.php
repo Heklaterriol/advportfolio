@@ -7,11 +7,14 @@
 // No direct access.
 defined('_JEXEC') or die;
 
-// Include dependancies
-JHtml::addIncludePath(JPATH_COMPONENT_ADMINISTRATOR . '/helpers/html');
+use JoomlaCMSFactory;
+use JoomlaCMSMVCControllerBaseController;
+
+// Include dependencies
 require_once __DIR__ . '/helpers/advportfolio.php';
 require_once __DIR__ . '/helpers/route.php';
 
-$controller	= JControllerLegacy::getInstance('AdvPortfolio');
-$controller->execute(JFactory::getApplication()->input->getCmd('task'));
+// Get and execute the controller
+$controller = BaseController::getInstance('AdvPortfolio', ['default_view' => 'projects']);
+$controller->execute(Factory::getApplication()->getInput()->getCmd('task'));
 $controller->redirect();

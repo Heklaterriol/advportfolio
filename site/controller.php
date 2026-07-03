@@ -7,30 +7,21 @@
 // No direct access.
 defined('_JEXEC') or die;
 
+use JoomlaCMSMVCControllerBaseController;
+
 /**
- * Skyline Technology Ltd Advanced Portfolio Component Controller.
+ * Advanced Portfolio Component Controller.
  *
  * @package		Joomla.Site
- * @subpakage	Skyline.Portfolio
+ * @subpackage	AdvPortfolio
  */
-class AdvPortfolioController extends JControllerLegacy {
-
-	/**
-	 * Method to display a view.
-	 *
-	 * @param	boolean			If true, the view output will be cached
-	 * @param	array			An array of safe url parameters and their variable types, for valid values see {@link JFilterInput::clean()}.
-	 *
-	 * @return	JController		This object to support chaining.
-	 */
-	public function display($cachable = false, $urlparams = false) {
+class AdvPortfolioController extends BaseController
+{
+	public function display($cachable = false, $urlparams = [])
+	{
 		$cachable = true;
-
 		$vName = $this->input->getCmd('view', 'projects');
 		$this->input->set('view', $vName);
-
 		return parent::display($cachable, $urlparams);
-
-		return $this;
 	}
 }

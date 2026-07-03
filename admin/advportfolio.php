@@ -7,20 +7,26 @@
 // No direct access.
 defined('_JEXEC') or die;
 
+use JoomlaCMSFactory;
+use JoomlaCMSLanguageText;
+use JoomlaCMSMVCControllerBaseController;
+use JoomlaCMSHelperContentHelper;
+
 // Access check.
-if (!JFactory::getUser()->authorise('core.manage', 'com_advportfolio')) {
-	return JError::raiseWarning(404, JText::_('JERROR_ALERTNOAUTHOR'));
+if (!Factory::getApplication()->getIdentity()->authorise('core.manage', 'com_advportfolio')) {
+	throw new Exception(Text::_('JERROR_ALERTNOAUTHOR'), 404);
 }
 
-// Include CSS and JS
-JHtml::_('script', 'com_advportfolio/admin.script.js', false, true);
-JHtml::_('stylesheet', 'com_advportfolio/admin.style.css', false, true);
+// Include CSS and JS using WebAssetManager
+$wa = Factory::getApplication()->getDocument()->getWebAssetManager();
+$wa->useScript('com_advportfolio.admin.script');
+$wa->useStyle('com_advportfolio.admin.style');
 
-// Include dependancies
-JHtml::addIncludePath(JPATH_COMPONENT . '/helpers/html');
+// Include dependencies
+ContentHelper::addIncludePath(JPATH_COMPONENT . '/helpers/html');
 require_once JPATH_COMPONENT . '/helpers/factory.php';
 require_once JPATH_COMPONENT . '/helpers/imagelib.php';
 
-$controller	= JControllerLegacy::getInstance('AdvPortfolio');
-$controller->execute(JFactory::getApplication()->input->get('task'));
+$controller = BaseController::getInstance('AdvPortfolio', ['default_view' => 'projects']);
+$controller->execute(Factory::getApplication()->getInput()->get('task'));
 $controller->redirect();
