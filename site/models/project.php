@@ -1,221 +1,72 @@
 <?php
 /**
- * @copyright	Copyright (c) 2013 Skyline Technology Ltd (http://extstore.com). All rights reserved.
- * @license		http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL
+ * @copyright    Copyright (c) 2013 Skyline Technology Ltd (http://extstore.com). All rights reserved.
+ * @license        http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL
  */
 
 // No direct access.
 defined('_JEXEC') or die;
 
-/**
- * Project Model.
- *
- * @package		Joomla.Site
- * @subpakage	Skyline.Portfolio
- */
-class AdvPortfolioModelProject extends JModelItem {
+use JoomlaCMSMVCModelItemModel;
+use JoomlaCMSFactory;
+use JoomlaCMSHelperTagsHelper;
 
-	/**
-	 * @var		string	Model context string.
-	 */
-	protected $_context = 'com_advportfolio.project';
+class AdvPortfolioModelProject extends ItemModel
+{
+	protected $typeAlias = 'com_advportfolio.project';
 
-	/**
-	 * Method to auto-populate the model state.
-	 *
-	 * Note. Calling getState in this method will result in recursion.
-	 */
-	protected function populateState()
+	public function getItem($pk = null)
 	{
-		$app = JFactory::getApplication('site');
-
-		// Load state from the request.
-		$pk = $app->input->getInt('id');
-		$this->setState('project.id', $pk);
-
-		$offset = $app->input->getUInt('limitstart');
-		$this->setState('list.offset', $offset);
-
-		// Load the parameters.
-		$params = $app->getParams();
-		$this->setState('params', $params);
-
-		// TODO: Tune these values based on other permissions.
-		$this->setState('filter.published', 1);
-		$this->setState('filter.archived', 2);
-		$this->setState('filter.access', !$params->get('show_noauth'));
-	}
-
-
-	/**
-	 * Method to get an object.
-	 *
-	 * @param	integer	The id of the object to get.
-	 * @return	mixed	Object on success, false on failure.
-	 */
-	public function &getItem($id = null) {
-		$pk	= (!empty($pk)) ? $pk : (int) $this->getState('project.id');
-
-		if ($this->_item === null) {
-			$this->_item = array();
+		$item = parent::getItem($pk);
+		if ($item) {
+			$tagsHelper = new TagsHelper;
+			$item->tags = $tagsHelper->getItemTags('com_advportfolio.project', $item->id);
 		}
-
-		if (!isset($this->_item[$pk])) {
-			try {
-				$db		= $this->getDbo();
-				$query	= $db->getQuery(true);
-
-				$query->select(
-					$this->getState('item.select', 'a.*')
-				);
-				$query->from('#__advportfolio_projects AS a');
-				$query->where('a.id = ' . (int) $pk);
-
-				// Join over the Categories.
-				$query->select('c.title AS category_title, c.alias AS category_alias, c.access AS category_access');
-				$query->join('LEFT', '#__categories AS c ON c.id = a.catid');
-
-				// Join on user table.
-				$query->select('u.name AS author');
-				$query->join('LEFT', '#__users AS u on u.id = a.created_by');
-
-//				// Join over the Tags.
-//				$query->select('GROUP_CONCAT(DISTINCT(t.title) ORDER BY t.title) AS tags');
-//				$query->join('LEFT', '#__advportfolio_projecttag_map AS m ON a.id = m.project_id');
-//				$query->join('LEFT', '#__advportfolio_tags AS t ON m.tag_id = t.id');
-//				$query->group('a.id');
-
-				// Filter by published state.
-				$published	= $this->getState('filter.published');
-				$archived	= $this->getState('filter.archived');
-
-				if (is_numeric($published)) {
-					$query->where('(a.state = ' . (int) $published . ' OR a.state = ' . (int) $archived . ')');
-				}
-
-				// Filter by access level.
-//				if ($access = $this->getState('filter.access')) {
-//					$user	= JFactory::getUser();
-//					$groups	= implode(', ', $user->getAuthorisedViewLevels());
-//					$query->where('a.access IN (' . $groups . ')');
-//					$query->where('c.access IN (' . $groups . ')');
-//				}
-
-				$db->setQuery($query);
-				$data	= $db->loadObject();
-
-				if (empty($data)) {
-					return JError::raiseError(404, JText::_('COM_ADVPORTFOLIO_ERROR_PROJECT_NOT_FOUND'));
-				}
-
-				// Check for published state if filter set.
-				if (((is_numeric($published)) || (is_numeric($archived))) && (($data->state != $published) && ($data->state != $archived))) {
-					return JError::raiseError(404, JText::_('COM_ADVPORTFOLIO_ERROR_PROJECT_NOT_FOUND'));
-				}
-
-				// Convert parameter fields to objects
-				$registry	= new JRegistry();
-				$params		= clone $this->getState('params');
-				$registry->loadString($data->params);
-				$params->merge($registry);
-				$data->params	= $params;
-
-				$registry	= new JRegistry();
-				$registry->loadString($data->metadata);
-				$data->metadata	= $registry;
-
-				$registry	= new JRegistry();
-				$registry->loadString($data->images);
-				$data->images	= AdvPortfolioHelper::getImages($registry->toObject());
-
-				// Compute view access permissions.
-				if ($access = $this->getState('filter.access')) {
-					// If the access filter has been set, we already know this user can view.
-					$data->params->set('access-view', true);
-				} else {
-					// If no access filter is set, the layout takes some responsibility for display of limited information.
-					$user = JFactory::getUser();
-					$groups = $user->getAuthorisedViewLevels();
-
-					if ($data->catid == 0 || $data->category_access === null) {
-						$data->params->set('access-view', in_array($data->access, $groups));
-					} else {
-						$data->params->set('access-view', in_array($data->access, $groups) && in_array($data->category_access, $groups));
-					}
-				}
-
-				$this->_item[$pk] = $data;
-
-			} catch(Exception $e) {
-				if ($e->getCode() == 404) {
-					// Need to go thru the error handler to allow Redirect to work.
-					JError::raiseError(404, $e->getMessage());
-				} else {
-					$this->setError($e);
-					$this->_item[$pk]	= false;
-				}
-			}
-		}
-
-		return $this->_item[$pk];
+		return $item;
 	}
 
-	/**
-	 * Method to get next project.
-	 */
-	public function getNextItem($pk = null) {
-		$pk	= (!empty($pk)) ? $pk : (int) $this->getState('project.id');
-
-		return $this->_getNearItem($pk);
-	}
-
-	/**
-	 * Method to get prev project.
-	 */
-	public function getPrevItem($pk = null) {
-		$pk	= (!empty($pk)) ? $pk : (int) $this->getState('project.id');
-
-		return $this->_getNearItem($pk, false);
-	}
-
-	/**
-	 * Method to get next/prev project.
-	 */
-	protected function _getNearItem($id, $next = true) {
-		$db			= $this->getDbo();
-		$query		= $db->getQuery(true);
-		$condition	= $next ? '> ' : '< ';
-		$order		= $next ? 'a.id' : 'a.id DESC';
-
-		$query->select('a.id, a.title, a.alias');
-		$query->select('CASE WHEN CHAR_LENGTH(a.alias) THEN CONCAT_WS(\':\', a.id, a.alias) ELSE a.id END AS slug');
-
+	public function getNextItem()
+	{
+		$db = $this->getDatabase();
+		$query = $db->getQuery(true);
+		$query->select('a.*');
 		$query->from('#__advportfolio_projects AS a');
-		$query->where('a.id ' . $condition . (int) $id);
-		$query->order($order);
-
-		// Join over the Categories.
-		$query->join('LEFT', '#__categories AS c ON c.id = a.catid');
-
-		// Filter by published state.
-		$published	= $this->getState('filter.published');
-		$archived	= $this->getState('filter.archived');
-
-		if (is_numeric($published)) {
-			$query->where('(a.state = ' . (int) $published . ' OR a.state = ' . (int) $archived . ')');
-		}
-
-		// Filter by access level.
-		if ($access = $this->getState('filter.access')) {
-			$user	= JFactory::getUser();
-			$groups	= implode(', ', $user->getAuthorisedViewLevels());
-			$query->where('a.access IN (' . $groups . ')');
-			$query->where('c.access IN (' . $groups . ')');
-		}
-
+		$query->where('a.catid = ' . (int) $this->getState('item.catid'));
+		$query->where('a.state = 1');
+		$query->where('a.id > ' . (int) $this->getState('item.id'));
+		$query->order('a.ordering ASC, a.id ASC');
+		$query->setLimit(1);
 		$db->setQuery($query);
-		$data	= $db->loadObject();
+		$result = $db->loadObject();
+		if ($result) {
+			$tagsHelper = new TagsHelper;
+			$result->tags = $tagsHelper->getItemTags('com_advportfolio.project', $result->id);
+		}
+		return $result;
+	}
 
-		return $data;
+	public function getPrevItem()
+	{
+		$db = $this->getDatabase();
+		$query = $db->getQuery(true);
+		$query->select('a.*');
+		$query->from('#__advportfolio_projects AS a');
+		$query->where('a.catid = ' . (int) $this->getState('item.catid'));
+		$query->where('a.state = 1');
+		$query->where('a.id < ' . (int) $this->getState('item.id'));
+		$query->order('a.ordering DESC, a.id DESC');
+		$query->setLimit(1);
+		$db->setQuery($query);
+		$result = $db->loadObject();
+		if ($result) {
+			$tagsHelper = new TagsHelper;
+			$result->tags = $tagsHelper->getItemTags('com_advportfolio.project', $result->id);
+		}
+		return $result;
+	}
+
+	public function getReturnPage()
+	{
+		return base64_decode($this->getState('return_page'));
 	}
 }
