@@ -11,18 +11,20 @@
         initChosen();
         initDropdowns();
     });
-
     function initTooltips() {
         var tooltips = document.querySelectorAll('.hasTooltip');
         tooltips.forEach(function(element) {
             var title = element.getAttribute('title');
             if (title) {
-                element.addEventListener('mouseenter', function() { showTooltip(element, title); });
-                element.addEventListener('mouseleave', function() { hideTooltip(); });
+                element.addEventListener('mouseenter', function() {
+                    showTooltip(element, title);
+                });
+                element.addEventListener('mouseleave', function() {
+                    hideTooltip();
+                });
             }
         });
     }
-
     function showTooltip(element, text) {
         var tooltip = document.createElement('div');
         tooltip.className = 'tooltip fade in';
@@ -40,34 +42,35 @@
         document.body.appendChild(tooltip);
         element._tooltip = tooltip;
     }
-
     function hideTooltip() {
         var tooltips = document.querySelectorAll('.tooltip');
-        tooltips.forEach(function(tooltip) { tooltip.remove(); });
+        tooltips.forEach(function(tooltip) {
+            tooltip.remove();
+        });
     }
-
     function initChosen() {
         if (typeof jQuery !== 'undefined' && jQuery.fn.chosen) {
             jQuery('select.chzn-select').chosen();
         }
     }
-
     function initDropdowns() {
         if (typeof jQuery !== 'undefined' && jQuery.fn.dropdown) {
             jQuery('.dropdown-toggle').dropdown();
         }
     }
-
     window.Joomla = window.Joomla || {};
     window.Joomla.submitbutton = function(task, form) {
         if (task === 'project.cancel' || (typeof document.formvalidator !== 'undefined' && document.formvalidator.isValid(form))) {
             Joomla.submitform(task, form);
         }
     };
-
     window.Joomla.submitform = function(task, form) {
-        if (typeof form === 'string') { form = document.getElementById(form); }
-        if (!form) { return false; }
+        if (typeof form === 'string') {
+            form = document.getElementById(form);
+        }
+        if (!form) {
+            return false;
+        }
         var taskInput = document.createElement('input');
         taskInput.type = 'hidden';
         taskInput.name = 'task';
@@ -76,14 +79,19 @@
         form.submit();
         return true;
     };
-
     window.Joomla.checkAll = function(element) {
         var form = element.form;
-        if (!form) { return; }
+        if (!form) {
+            return;
+        }
         var checkboxes = form.querySelectorAll('input[name^="cid"]');
         var checked = element.checked;
-        checkboxes.forEach(function(cb) { cb.checked = checked; });
+        checkboxes.forEach(function(cb) {
+            cb.checked = checked;
+        });
         var boxchecked = form.querySelector('input[name="boxchecked"]');
-        if (boxchecked) { boxchecked.value = checked ? checkboxes.length : 0; }
+        if (boxchecked) {
+            boxchecked.value = checked ? checkboxes.length : 0;
+        }
     };
 })();
