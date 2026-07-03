@@ -7,94 +7,38 @@
 // No direct access.
 defined('_JEXEC') or die;
 
-JHtml::addIncludePath(JPATH_COMPONENT . '/helpers/html');
-JHtml::_('behavior.tooltip');
-JHtml::_('formbehavior.chosen', 'select');
+use JoomlaCMSFactory;
+use JoomlaCMSLanguageText;
+
+$wa = Factory::getApplication()->getDocument()->getWebAssetManager();
+$wa->useScript('dropzone');
+$wa->useStyle('dropzone');
 ?>
-
-<style>
-	body {
-		padding-top: 0;
-	}
-</style>
-
-<?php echo $this->loadTemplate('dropzoneupload'); ?>
-
-<form action="<?php echo JRoute::_("index.php?option=com_advportfolio&view=imagehandler&tmpl=component&image_id=$this->image_id&folder=$this->folder"); ?>" method="post" name="adminForm" id="adminForm" enctype="multipart/form-data">
-	<div class="subhead clearfix">
-		<div class="container-fluid search-form pull-left">
-			<div class="input-append pull-left" style="margin-right: 20px;">
-				<input type="text" name="filter_search" id="filter_search" value="<?php echo $this->escape($this->state->get('filter.search')); ?>" title="<?php echo JText::_('COM_ADVPORTFOLIO_SEARCH_IN_TITLE'); ?>" />
-				<button type="submit" class="btn">
-					<i class="icon-search"></i>
-				</button>
-				<button type="button" class="btn" onclick="document.id('filter_search').value = ''; this.form.submit();">
-					<i class="icon-remove"></i>
-				</button>
-			</div>
-
-			<div class="btn-group pull-right hidden-phone">
-				<label for="limit" class="element-invisible"><?php echo JText::_('JFIELD_PLG_SEARCH_SEARCHLIMIT_DESC') ;?></label>
-				<?php echo $this->pagination->getLimitBox(); ?>
-			</div>
-		</div>
-
-		<div class="pull-right">
-			<div class="input-append">
-				<input type="text" name="new_folder" id="new_folder" class="input-medium" value="" />
-				<button type="button" class="btn" onclick="if (this.form.new_folder.value) { this.form.task.value = 'imagehandler.createFolder'; this.form.submit(); }">
-					<?php echo JText::_('COM_ADVPORTFOLIO_FOLDER_CREATE'); ?>
-				</button>
-			</div>
-		</div>
-	</div>
-
-	<ul class="manager thumbnails" style="padding-left: 20px;">
-		<?php if ($this->folder) : ?>
-			<li class="imgOutline thumbnail width-90 center">
-				<div align="center" class="imageborder">
-					<a href="<?php echo JRoute::_('index.php?option=com_advportfolio&view=imagehandler&tmpl=component&image_id=' . $this->image_id . '&folder=' . dirname($this->folder)); ?>">
-						<?php echo JHtml::_('image', 'com_advportfolio/folder.png', 'folder', '', true); ?>
-					</a>
-				</div>
-				<div class="imagecontrol">
-
-				</div>
-				<div class="imageinfo">
-					..
-				</div>
-			</li>
-		<?php endif; ?>
-
-		<?php foreach ($this->folders as $folder) : ?>
-			<li class="imgOutline thumbnail width-90 center">
-				<div align="center" class="imageborder">
-					<a href="<?php echo JRoute::_('index.php?option=com_advportfolio&view=imagehandler&tmpl=component&image_id=' . $this->image_id . '&folder=' . ($this->folder ? $this->folder . '/' : '') . $folder->name); ?>" title="<?php echo $folder->name; ?>">
-						<?php echo JHtml::_('image', 'com_advportfolio/folder.png', $folder->name, '', true); ?>
-					</a>
-				</div>
-				<div class="imagecontrol">
-
-				</div>
-				<div class="imageinfo">
-					<?php echo $this->escape(strlen($folder->name) > 13 ? substr($folder->name, 0, 10) . '...' : $folder->name); ?>
-				</div>
-			</li>
-		<?php endforeach; ?>
-
-		<?php for ($i = 0, $n = count($this->items); $i < $n; $i++) : ?>
-			<?php $this->setImage($i); ?>
-			<?php echo $this->loadTemplate('image'); ?>
-		<?php endfor; ?>
-	</ul>
-
-	<?php if ($this->pagination->total > $this->pagination->limit) : ?>
-	<?php echo $this->pagination->getListFooter(); ?>
-	<?php endif; ?>
-
-	<input type="hidden" name="task" value="" />
-	<?php echo JHtml::_('form.token'); ?>
+<div class="row-fluid">
+<div class="span12">
+<form action="<?php echo JUri::base(); ?>index.php?option=com_advportfolio&task=imagehandler.upload" method="post" enctype="multipart/form-data" class="dropzone" id="advPortfolioDropzone">
+<input type="hidden" name="<?php echo JSession::getFormToken(); ?>" value="1" />
+<div class="dz-message">
+<span class="dz-message-text"><?php echo Text::_('COM_ADVPORTFOLIO_DROP_FILES_HERE'); ?></span>
+<span class="dz-message-or"><?php echo Text::_('JOR'); ?></span>
+<button type="button" class="dz-message-button btn btn-primary"><?php echo Text::_('JSELECT_FILES'); ?></button>
+</div>
 </form>
-
-<?php
-echo AdvPortfolioFactory::getFooter();
+</div>
+</div>
+<script>
+Dropzone.options.advPortfolioDropzone = {
+	paramName: 'file',
+	maxFilesize: 2,
+	acceptedFiles: 'image/*',
+	addRemoveLinks: true,
+	dictRemoveFile: 'Remove file',
+	dictDefaultMessage: 'Drop files here or click to upload',
+	dictFallbackMessage: 'Your browser does not support drag and drop file uploads.',
+	init: function() {
+		this.on('success', function(file, response) {
+			if (response.success) { alert('Upload successful'); } else { alert('Error: ' + response.message); }
+		});
+	}
+};
+</script>

@@ -7,206 +7,88 @@
 // No direct access.
 defined('_JEXEC') or die;
 
-use Joomla\CMS\Factory;
-use Joomla\CMS\Language\Text;
-use Joomla\CMS\Router\Route;
-use Joomla\CMS\Layout\LayoutHelper;
-use Joomla\CMS\Helper\ContentHelper;
+use JoomlaCMSFactory;
+use JoomlaCMSLanguageText;
+use JoomlaCMSRouterRoute;
+use JoomlaCMSLayoutLayoutHelper;
+use JoomlaCMSHelperContentHelper;
 
-// Load WebAssetManager
-\$wa = Factory::getApplication()->getDocument()->getWebAssetManager();
-\$wa->useScript('com_advportfolio.admin.script');
-\$wa->useStyle('com_advportfolio.admin.style');
+$wa = Factory::getApplication()->getDocument()->getWebAssetManager();
+$wa->useScript('com_advportfolio.admin.script');
+$wa->useStyle('com_advportfolio.admin.style');
 
-// Add form behaviors
 ContentHelper::addIncludePath(JPATH_COMPONENT . '/helpers/html');
-\$wa->useScript('form.validation');
-\$wa->useScript('chosen.jquery');
-\$wa->useScript('bootstrap.tooltip');
 
-\$app = Factory::getApplication();
-\$input = \$app->getInput();
-\$user = \$app->getIdentity();
-
-// Get the form
-\$form = \$this->form;
-\$item = \$this->item;
-\$canDo = ContentHelper::getActions('com_advportfolio');
+$wa->addInlineScript("Joomla.submitbutton = function(task, form) { if (task == 'project.cancel' || (typeof document.formvalidator !== 'undefined' && document.formvalidator.isValid(form))) { Joomla.submitform(task, form); } }", []);
 ?>
-
-<script>
-Joomla.submitbutton = function(task) {
-	if (task == 'project.cancel' || document.formvalidator.isValid(document.id('project-form'))) {
-		Joomla.submitform(task, document.getElementById('project-form'));
-	} else {
-		alert('<?php echo \$this->escape(Text::_('JGLOBAL_VALIDATION_FORM_FAILED')); ?>');
-	}
-}
-</script>
-
-<form action="<?php echo Route::_('index.php?option=com_advportfolio&layout=edit&id=' . (int) \$item->id); ?>" method="post" name="adminForm" id="project-form" class="form-validate form-horizontal">
-	<div class="row-fluid">
-		<div class="span10 form-horizontal">
-			<fieldset class="adminform">
-				<legend><?php echo Text::_('COM_ADVPORTFOLIO_PROJECT_DETAILS'); ?></legend>
-				
-				<div class="control-group">
-					<div class="control-label">
-						<?php echo \$form->getLabel('title'); ?>
-					</div>
-					<div class="controls">
-						<?php echo \$form->getInput('title'); ?>
-					</div>
-				</div>
-				
-				<div class="control-group">
-					<div class="control-label">
-						<?php echo \$form->getLabel('alias'); ?>
-					</div>
-					<div class="controls">
-						<?php echo \$form->getInput('alias'); ?>
-					</div>
-				</div>
-				
-				<div class="control-group">
-					<div class="control-label">
-						<?php echo \$form->getLabel('catid'); ?>
-					</div>
-					<div class="controls">
-						<?php echo \$form->getInput('catid'); ?>
-					</div>
-				</div>
-				
-				<div class="control-group">
-					<div class="control-label">
-						<?php echo \$form->getLabel('short_description'); ?>
-					</div>
-					<div class="controls">
-						<?php echo \$form->getInput('short_description'); ?>
-					</div>
-				</div>
-				
-				<div class="control-group">
-					<div class="control-label">
-						<?php echo \$form->getLabel('description'); ?>
-					</div>
-					<div class="controls">
-						<?php echo \$form->getInput('description'); ?>
-					</div>
-				</div>
-				
-				<div class="control-group">
-					<div class="control-label">
-						<?php echo \$form->getLabel('type'); ?>
-					</div>
-					<div class="controls">
-						<?php echo \$form->getInput('type'); ?>
-					</div>
-				</div>
-				
-				<div class="control-group" id="video-link-group" style="display: <?php echo (\$item->type == 1) ? 'block' : 'none'; ?>;">
-					<div class="control-label">
-						<?php echo \$form->getLabel('video_link'); ?>
-					</div>
-					<div class="controls">
-						<?php echo \$form->getInput('video_link'); ?>
-					</div>
-				</div>
-				
-				<div class="control-group">
-					<div class="control-label">
-						<?php echo \$form->getLabel('thumbnail'); ?>
-					</div>
-					<div class="controls">
-						<?php echo \$form->getInput('thumbnail'); ?>
-					</div>
-				</div>
-				
-				<div class="control-group">
-					<div class="control-label">
-						<?php echo \$form->getLabel('images'); ?>
-					</div>
-					<div class="controls">
-						<?php echo \$form->getInput('images'); ?>
-					</div>
-				</div>
-				
-				<div class="control-group">
-					<div class="control-label">
-						<?php echo \$form->getLabel('link'); ?>
-					</div>
-					<div class="controls">
-						<?php echo \$form->getInput('link'); ?>
-					</div>
-				</div>
-				
-				<div class="control-group">
-					<div class="control-label">
-						<?php echo \$form->getLabel('state'); ?>
-					</div>
-					<div class="controls">
-						<?php echo \$form->getInput('state'); ?>
-					</div>
-				</div>
-				
-				<div class="control-group">
-					<div class="control-label">
-						<?php echo \$form->getLabel('access'); ?>
-					</div>
-					<div class="controls">
-						<?php echo \$form->getInput('access'); ?>
-					</div>
-				</div>
-				
-				<div class="control-group">
-					<div class="control-label">
-						<?php echo \$form->getLabel('language'); ?>
-					</div>
-					<div class="controls">
-						<?php echo \$form->getInput('language'); ?>
-					</div>
-				</div>
-				
-				<div class="control-group">
-					<div class="control-label">
-						<?php echo \$form->getLabel('tags'); ?>
-					</div>
-					<div class="controls">
-						<?php echo \$form->getInput('tags'); ?>
-					</div>
-				</div>
-				
-				<?php echo LayoutHelper::render('joomla.edit.params', ['form' => \$form, 'data' => \$this->item]); ?>
-				
-				<?php if (\$canDo->get('core.admin')) : ?>
-				<div class="control-group">
-					<div class="control-label">
-						<?php echo \$form->getLabel('id'); ?>
-					</div>
-					<div class="controls">
-						<?php echo \$form->getInput('id'); ?>
-					</div>
-				</div>
-				<?php endif; ?>
-			</fieldset>
-		</div>
-	</div>
-
-	<input type="hidden" name="task" value="" />
-	<?php echo LayoutHelper::render('joomla.html.form.token'); ?>
+<form action="<?php echo Route::_('index.php?option=com_advportfolio&layout=edit&id=' . (int) $this->item->id); ?>" method="post" name="adminForm" id="adminForm" class="form-validate">
+<div class="row-fluid">
+<div class="span10 form-horizontal">
+<fieldset class="adminform">
+<legend><?php echo Text::_('COM_ADVPORTFOLIO_PROJECT_DETAILS'); ?></legend>
+<div class="control-group">
+<div class="control-label"><?php echo $this->form->getLabel('title'); ?></div>
+<div class="controls"><?php echo $this->form->getInput('title'); ?></div>
+</div>
+<div class="control-group">
+<div class="control-label"><?php echo $this->form->getLabel('alias'); ?></div>
+<div class="controls"><?php echo $this->form->getInput('alias'); ?></div>
+</div>
+<div class="control-group">
+<div class="control-label"><?php echo $this->form->getLabel('catid'); ?></div>
+<div class="controls"><?php echo $this->form->getInput('catid'); ?></div>
+</div>
+<div class="control-group">
+<div class="control-label"><?php echo $this->form->getLabel('short_description'); ?></div>
+<div class="controls"><?php echo $this->form->getInput('short_description'); ?></div>
+</div>
+<div class="control-group">
+<div class="control-label"><?php echo $this->form->getLabel('description'); ?></div>
+<div class="controls"><?php echo $this->form->getInput('description'); ?></div>
+</div>
+<div class="control-group">
+<div class="control-label"><?php echo $this->form->getLabel('state'); ?></div>
+<div class="controls"><?php echo $this->form->getInput('state'); ?></div>
+</div>
+<div class="control-group">
+<div class="control-label"><?php echo $this->form->getLabel('access'); ?></div>
+<div class="controls"><?php echo $this->form->getInput('access'); ?></div>
+</div>
+<div class="control-group">
+<div class="control-label"><?php echo $this->form->getLabel('language'); ?></div>
+<div class="controls"><?php echo $this->form->getInput('language'); ?></div>
+</div>
+<div class="control-group">
+<div class="control-label"><?php echo $this->form->getLabel('type'); ?></div>
+<div class="controls"><?php echo $this->form->getInput('type'); ?></div>
+</div>
+<div class="control-group">
+<div class="control-label"><?php echo $this->form->getLabel('images'); ?></div>
+<div class="controls"><?php echo $this->form->getInput('images'); ?></div>
+</div>
+<div class="control-group">
+<div class="control-label"><?php echo $this->form->getLabel('thumbnail'); ?></div>
+<div class="controls"><?php echo $this->form->getInput('thumbnail'); ?></div>
+</div>
+<div class="control-group">
+<div class="control-label"><?php echo $this->form->getLabel('video_link'); ?></div>
+<div class="controls"><?php echo $this->form->getInput('video_link'); ?></div>
+</div>
+<div class="control-group">
+<div class="control-label"><?php echo $this->form->getLabel('link'); ?></div>
+<div class="controls"><?php echo $this->form->getInput('link'); ?></div>
+</div>
+<?php echo $this->form->getInput('id'); ?>
+<?php echo $this->form->getInput('created'); ?>
+<?php echo $this->form->getInput('created_by'); ?>
+<?php echo $this->form->getInput('modified'); ?>
+<?php echo $this->form->getInput('modified_by'); ?>
+<?php echo $this->form->getInput('metakey'); ?>
+<?php echo $this->form->getInput('metadesc'); ?>
+<?php echo $this->form->getInput('metadata'); ?>
+</fieldset>
+</div>
+</div>
+<input type="hidden" name="task" value="" />
+<?php echo LayoutHelper::render('joomla.html.form.token'); ?>
 </form>
-
-<?php
-// Add script for type change handler
-\$wa->addInlineScript("
-document.addEventListener('DOMContentLoaded', function() {
-	var typeField = document.getElementById('jform_type');
-	var videoLinkGroup = document.getElementById('video-link-group');
-	
-	if (typeField && videoLinkGroup) {
-		typeField.addEventListener('change', function() {
-			videoLinkGroup.style.display = (this.value == 1) ? 'block' : 'none';
-		});
-	}
-});
-", []);
