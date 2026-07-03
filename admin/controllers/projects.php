@@ -7,47 +7,69 @@
 // No direct access.
 defined('_JEXEC') or die;
 
-/**
- * Project List Controller Class.
- *
- * @package		Joomla.Administrator
- * @subpakage	Skyline.Portfolio
- */
-class AdvPortfolioControllerProjects extends JControllerAdmin {
-	/** @var string		The prefix to use with controller messages. */
-	protected $text_prefix	= 'COM_ADVPORTFOLIO_PROJECTS';
+use JoomlaCMSMVCControllerAdminController;
+use JoomlaCMSFactory;
+use JoomlaCMSLanguageText;
+use JoomlaCMSRouterRoute;
 
-	/**
-	 * Proxy for getModel.
-	 */
-	public function getModel($name = 'Project', $prefix = 'AdvPortfolioModel', $config = array('ignore_request' => true)) {
-		$model	= parent::getModel($name, $prefix, $config);
-		return $model;
+class AdvPortfolioControllerProjects extends AdminController
+{
+	public function __construct($config = [])
+	{
+		parent::__construct($config);
 	}
 
-	/**
-	 * Method to save the submitted ordering values for records via AJAX.
-	 */
 	public function saveOrderAjax()
 	{
-		$pks	= $this->input->post->get('cid', array(), 'array');
-		$order	= $this->input->post->get('order', array(), 'array');
+		$pks = $this->input->post->get('cid', [], 'array');
+		$order = $this->input->post->get('order', [], 'array');
+		$pks = array_map('intval', $pks);
+		$order = array_map('intval', $order);
+		$model = $this->getModel();
+		$model->saveorder($pks, $order);
+		Factory::getApplication()->close();
+	}
 
-		// Sanitize the input
-		JArrayHelper::toInteger($pks);
-		JArrayHelper::toInteger($order);
-
-		// Get the model
-		$model	= $this->getModel();
-
-		// Save the ordering
-		$return	= $model->saveorder($pks, $order);
-
-		if ($return) {
-			echo "1";
+	public function publish()
+	{
+		Factory::getApplication()->checkToken();
+		$model = $this->getModel();
+		$pks = $this->input->post->get('cid', [], 'array');
+		$value = $this->input->getInt('value', 1);
+		if (!$model->publish($pks, $value)) {
+			$this->setMessage($model->getError(), 'error');
+		} else {
+			$ntext = $this->getTextPrefix('COM_ADVPORTFOLIO');
+			$this->setMessage(Text::plural($ntext . '_N_ITEMS_PUBLISHED', count($pks)));
 		}
+		$this->setRedirect(Route::_('index.php?option=' . $this->option . '&view=' . $this->view_list, false));
+	}
 
-		// Close the application
-		JFactory::getApplication()->close();
+	public function archive()
+	{
+		Factory::getApplication()->checkToken();
+		$model = $this->getModel();
+		$pks = $this->input->post->get('cid', [], 'array');
+		if (!$model->archive($pks)) {
+			$this->setMessage($model->getError(), 'error');
+		} else {
+			$ntext = $this->getTextPrefix('COM_ADVPORTFOLIO');
+			$this->setMessage(Text::plural($ntext . '_N_ITEMS_ARCHIVED', count($pks)));
+		}
+		$this->setRedirect(Route::_('index.php?option=' . $this->option . '&view=' . $this->view_list, false));
+	}
+
+	public function trash()
+	{
+		Factory::getApplication()->checkToken();
+		$model = $this->getModel();
+		$pks = $this->input->post->get('cid', [], 'array');
+		if (!$model->trash($pks)) {
+			$this->setMessage($model->getError(), 'error');
+		} else {
+			$ntext = $this->getTextPrefix('COM_ADVPORTFOLIO');
+			$this->setMessage(Text::plural($ntext . '_N_ITEMS_TRASHED', count($pks)));
+		}
+		$this->setRedirect(Route::_('index.php?option=' . $this->option . '&view=' . $this->view_list, false));
 	}
 }

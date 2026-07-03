@@ -1,100 +1,65 @@
 <?php
 /**
- * @copyright    Copyright (c) 2013 Skyline Technology Ltd (http://extstore.com). All rights reserved.
- * @license        http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL
+ * @copyright	Copyright (c) 2013 Skyline Technology Ltd (http://extstore.com). All rights reserved.
+ * @license		http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL
  */
 
 // No direct access.
 defined('_JEXEC') or die;
 
-/**
- * Project Controller Class.
- *
- * @package        Joomla.Administrator
- * @subpakage    Skyline.Portfolio
- */
-class AdvPortfolioControllerProject extends JControllerForm {
+use JoomlaCMSMVCControllerFormController;
+use JoomlaCMSFactory;
+use JoomlaCMSLanguageText;
+use JoomlaCMSRouterRoute;
 
-	/**
-	 * Method override to check if you can add a new record.
-	 *
-	 * @param    array $data    An array of input data.
-	 * @return    bool
-	 */
-	protected function allowAdd($data = array()) {
-		// Initialize variables.
-		$user = JFactory::getUser();
-		$categoryId = JArrayHelper::getValue($data, 'catid', $this->input->getInt('filter_category_id'), 'int');
-		$allow = null;
+class AdvPortfolioControllerProject extends FormController
+{
+	public function __construct($config = [])
+	{
+		parent::__construct($config);
+	}
 
-		if ($categoryId) {
-			// If the category has been passed in URL check it.
-			$allow = $user->authorise('core.create', $this->option . '.category.' . $categoryId);
+	public function add()
+	{
+		$this->setView('project');
+		parent::add();
+	}
+
+	public function edit($key = null, $urlVar = null)
+	{
+		$this->setView('project');
+		parent::edit($key, $urlVar);
+	}
+
+	public function save($key = null, $urlVar = null)
+	{
+		Factory::getApplication()->checkToken();
+		$model = $this->getModel();
+		$data = $this->input->post->get('jform', [], 'array');
+		if (!$model->save($data)) {
+			$this->setRedirect(Route::_('index.php?option=' . $this->option . '&view=' . $this->view_item . $this->getRedirectToItemAppend($recordId), false));
+			return false;
 		}
+		$this->setRedirect(Route::_('index.php?option=' . $this->option . '&view=' . $this->view_list, false));
+		return true;
+	}
 
-		if ($allow === null) {
-			// In the absense of better information, revert to the component permissions.
-			return parent::allowAdd($data);
+	public function cancel($key = null)
+	{
+		$app = Factory::getApplication();
+		$app->redirect(Route::_('index.php?option=' . $this->option . '&view=' . $this->view_list, false));
+	}
+
+	public function delete()
+	{
+		Factory::getApplication()->checkToken();
+		$model = $this->getModel();
+		$pks = $this->input->post->get('cid', [], 'array');
+		if (!$model->delete($pks)) {
+			$this->setMessage($model->getError(), 'error');
 		} else {
-			return $allow;
+			$this->setMessage(Text::plural('COM_ADVPORTFOLIO_N_ITEMS_DELETED', count($pks)));
 		}
-	}
-
-	/**
-	 * Method override to check if you can edit an existing record.
-	 *
-	 * @param    array $data    An array of input data.
-	 * @param    string $key    The name of the key for the primary key.
-	 * @return    bool
-	 */
-	protected function allowEdit($data = array(), $key = 'id') {
-		// Initialize variables.
-		$recordId = (int)isset($data[$key]) ? $data[$key] : 0;
-		$categoryId = 0;
-
-		if ($recordId) {
-			$categoryId = (int)$this->getModel()->getItem($recordId)->catid;
-		}
-
-		if ($categoryId) {
-			// The Category has been set. Check the Category permissions.
-			return JFactory::getUser()->authorise('core.edit', $this->option . '.category.' . $categoryId);
-		} else {
-			// Since there is no asset tracking, revert to the component permissions.
-			return parent::allowEdit($data, $key);
-		}
-	}
-
-	/**
-	 * Method to run batch operations.
-	 *
-	 * @return    void
-	 */
-	public function batch() {
-		JSession::checkToken() or jexit(JText::_('JINVALID_TOKEN'));
-
-		// Set the model
-		$model = $this->getModel('Project', '', array());
-
-		// Preset the redirect
-		$this->setRedirect(JRoute::_('index.php?option=com_advportfolio&view=projects' . $this->getRedirectToListAppend(), false));
-
-		return parent::batch($model);
-	}
-
-	/**
-	 * Function that allows child controller access to model data
-	 * after the data has been saved.
-	 *
-	 * @param   JModelLegacy $model      The data model object.
-	 * @param   array $validData  The validated data.
-	 *
-	 * @return  void
-	 */
-	protected function postSaveHook(JModelLegacy $model, $validData = array()) {
-		$task	= $this->getTask();
-		if ($task == 'save') {
-			$this->setRedirect(JRoute::_('index.php?option=com_advportfolio&view=projects', false));
-		}
+		$this->setRedirect(Route::_('index.php?option=' . $this->option . '&view=' . $this->view_list, false));
 	}
 }
