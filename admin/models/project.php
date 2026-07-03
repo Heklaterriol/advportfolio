@@ -9,6 +9,7 @@ defined('_JEXEC') or die;
 
 use JoomlaCMSMVCModelAdminModel;
 use JoomlaCMSFactory;
+use JoomlaCMSTableTable;
 
 class AdvPortfolioModelProject extends AdminModel
 {
@@ -17,14 +18,18 @@ class AdvPortfolioModelProject extends AdminModel
 	public function getForm($data = [], $loadData = true)
 	{
 		$form = $this->loadForm('com_advportfolio.project', 'project', ['control' => 'jform', 'load_data' => $loadData]);
-		if (empty($form)) { return false; }
+		if (empty($form)) {
+			return false;
+		}
 		return $form;
 	}
 
 	protected function loadFormData()
 	{
 		$data = Factory::getApplication()->getUserState('com_advportfolio.edit.project.data', []);
-		if (empty($data)) { $data = $this->getItem(); }
+		if (empty($data)) {
+			$data = $this->getItem();
+		}
 		return $data;
 	}
 
@@ -42,10 +47,14 @@ class AdvPortfolioModelProject extends AdminModel
 	{
 		$app = Factory::getApplication();
 		$user = $app->getIdentity();
-		if (!isset($data['created_by']) || empty($data['created_by'])) { $data['created_by'] = $user->id; }
+		if (!isset($data['created_by']) || empty($data['created_by'])) {
+			$data['created_by'] = $user->id;
+		}
 		$data['modified_by'] = $user->id;
 		$data['modified'] = Factory::getDate()->toSql();
-		if (!isset($data['id']) || empty($data['id'])) { $data['created'] = Factory::getDate()->toSql(); }
+		if (!isset($data['id']) || empty($data['id'])) {
+			$data['created'] = Factory::getDate()->toSql();
+		}
 		if (isset($data['params']) && is_array($data['params'])) {
 			$registry = new JoomlaRegistryRegistry($data['params']);
 			$data['params'] = $registry->toString();
@@ -58,7 +67,10 @@ class AdvPortfolioModelProject extends AdminModel
 		$pks = (array) $pks;
 		$table = $this->getTable();
 		foreach ($pks as $pk) {
-			if (!$table->load($pk)) { $this->setError($table->getError()); return false; }
+			if (!$table->load($pk)) {
+				$this->setError($table->getError());
+				return false;
+			}
 		}
 		return parent::delete($pks);
 	}
