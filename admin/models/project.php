@@ -1,15 +1,18 @@
 <?php
 /**
- * @copyright	Copyright (c) 2013 Skyline Technology Ltd (http://extstore.com). All rights reserved.
- * @license		http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL
+ * @package     AdvPortfolio
+ * @subpackage  Admin.Models
+ * @copyright   Copyright (C) 2026 Hekla Terriol. All rights reserved.
+ * @license     GNU General Public License version 2 or later
  */
 
 // No direct access.
 defined('_JEXEC') or die;
 
-use JoomlaCMSMVCModelAdminModel;
-use JoomlaCMSFactory;
-use JoomlaCMSTableTable;
+use Joomla\CMS\MVC\Model\AdminModel;
+use Joomla\CMS\Factory;
+use Joomla\CMS\Table\Table;
+use Joomla\Registry\Registry;
 
 class AdvPortfolioModelProject extends AdminModel
 {
@@ -37,7 +40,7 @@ class AdvPortfolioModelProject extends AdminModel
 	{
 		$item = parent::getItem($pk);
 		if ($item && property_exists($item, 'params')) {
-			$registry = new JoomlaRegistryRegistry($item->params);
+			$registry = new Registry($item->params);
 			$item->params = $registry;
 		}
 		return $item;
@@ -56,7 +59,7 @@ class AdvPortfolioModelProject extends AdminModel
 			$data['created'] = Factory::getDate()->toSql();
 		}
 		if (isset($data['params']) && is_array($data['params'])) {
-			$registry = new JoomlaRegistryRegistry($data['params']);
+			$registry = new Registry($data['params']);
 			$data['params'] = $registry->toString();
 		}
 		return parent::save($data);
