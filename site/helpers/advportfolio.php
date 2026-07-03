@@ -7,61 +7,59 @@
 // No direct access.
 defined('_JEXEC') or die;
 
-/**
- * Advanced Portfolio Helper.
- *
- * @package		Joomla.Site
- * @subpackage	Skyline.Portfolio
- */
-class AdvPortfolioHelper {
+use JoomlaCMSMVCModelBaseDatabaseModel;
+use JoomlaCMSHelperStringHelper;
 
-	/**
-	 * Get model of component
-	 */
-	public static function getModel($type, $config = array()) {
-		return JModelLegacy::getInstance($type, 'AdvPortfolioModel', $config);
+class AdvPortfolioHelper
+{
+	public static function getModel($type, $config = [])
+	{
+		return BaseDatabaseModel::getInstance($type, 'AdvPortfolioModel', $config);
 	}
 
-	/**
-	 * Method to get value of images field.
-	 *
-	 * @params	string	$value	Raw data string.
-	 * @return	array	Array of images.
-	 */
-	public static function getImages($value) {
-		$items	= array();
-
+	public static function getImages($value)
+	{
+		$items = [];
 		if (is_array($value)) {
 			if (isset($value['image']) && count($value['image'])) {
 				for ($i = 0, $n = count($value['image']); $i < $n; $i++) {
-					$item			= new stdClass();
-					$item->image	= $value['image'][$i];
-					$item->title	= $value['title'][$i];
-
-					if ($item->image) {
-						$items[]		= $item;
-					}
+					$item = new stdClass();
+					$item->image = $value['image'][$i];
+					$item->title = $value['title'][$i];
+					if ($item->image) { $items[] = $item; }
 				}
 			}
-		} else if (is_object($value)) {
+		} elseif (is_object($value)) {
 			if (isset($value->image) && count($value->image)) {
 				for ($i = 0, $n = count($value->image); $i < $n; $i++) {
-					$item			= new stdClass();
-					$item->image	= $value->image[$i];
-					$item->title	= $value->title[$i];
-
-					if ($item->image) {
-						$items[]		= $item;
-					}
+					$item = new stdClass();
+					$item->image = $value->image[$i];
+					$item->title = $value->title[$i];
+					if ($item->image) { $items[] = $item; }
 				}
 			}
 		}
-
 		return $items;
 	}
 
-	public static function poweredBy() {
-		return '<div style="text-align: center; padding-top: 20px;"><a style="display: inline; visibility: visible; text-decoration: none;" target="_blank" rel="follow" href="http://extstore.com">Powered by ExtStore Advanced Portfolio</a></div>';
+	public static function renderImage($image, $width = null, $alt = null, $title = null)
+	{
+		if (empty($image)) { return ''; }
+		$imagePath = $image;
+		$attributes = [];
+		if ($width) { $attributes['width'] = (int) $width; }
+		if ($alt) { $attributes['alt'] = $alt; } else { $attributes['alt'] = ''; }
+		if ($title) { $attributes['title'] = $title; }
+		$html = '<img src="' . htmlspecialchars($imagePath, ENT_QUOTES, 'UTF-8') . '"';
+		foreach ($attributes as $key => $value) {
+			$html .= ' ' . $key . '="' . htmlspecialchars($value, ENT_QUOTES, 'UTF-8') . '"';
+		}
+		$html .= ' />';
+		return $html;
 	}
 
+	public static function poweredBy()
+	{
+		return '<div style="text-align: center; padding-top: 20px;"><a style="display: inline; visibility: visible; text-decoration: none;" target="_blank" rel="nofollow noopener noreferrer" href="http://extstore.com">Powered by ExtStore Advanced Portfolio</a></div>';
+	}
 }

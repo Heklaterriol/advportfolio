@@ -7,35 +7,12 @@
 // No direct access.
 defined('_JEXEC') or die;
 
-/**
- * Skyline Portfolio Factory Class.
- * @package		Joomla.Administrator
- * @subpakage	Skyline.Portfolio
- */
-class AdvPortfolioFactory {
-	/**
-	 * Get credits footer string.
-	 * @return	string
-	 */
-	public static function getFooter() {
-		return '<p class="sl_copyright"><span class="sl_title">Advanced Portfolio - Version ' . self::getVersion() . '</span> Copyright &copy; 2013 by <strong>Skyline Technology Ltd - <a href="http://extstore.com" target="_blank">http://extstore.com</a></strong></p>';
-	}
+use JoomlaCMSLanguageText;
 
-	/**
-	 * Get current version of component.
-	 */
-	public static function getVersion() {
-		$table		= JTable::getInstance('Extension');
-		$table->load(array('name' => 'com_advportfolio'));
-		$registry	= new JRegistry($table->manifest_cache);
-
-		return $registry->get('version');
-	}
-
-	/**
-	 * Get model of component
-	 */
-	public static function getModel($type, $config = array()) {
-		return JModelLegacy::getInstance($type, 'AdvPortfolioModel', $config);
+class AdvPortfolioFactory
+{
+	public static function getFooter()
+	{
+		return '<div style="text-align: center; padding-top: 20px;"><a style="display: inline; visibility: visible; text-decoration: none;" target="_blank" rel="nofollow noopener noreferrer" href="http://extstore.com">Powered by ExtStore Advanced Portfolio</a></div>';
 	}
 }
