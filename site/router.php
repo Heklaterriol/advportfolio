@@ -17,13 +17,17 @@ use Joomla\CMS\Uri\Uri;
 
 class AdvPortfolioRouter extends Router
 {
-	public function build(&$query)
+	public function build($url)
 	{
 		$segments = [];
 		$app = Factory::getApplication();
 		$menu = $app->getMenu();
 		$params = ComponentHelper::getParams('com_advportfolio');
 		$advanced = $params->get('sef_advanced_link', 0);
+		
+		// Parse the URL to get query parameters
+		$query = $url->getQuery(true);
+		
 		if (empty($query['Itemid'])) {
 			$menuItem = $menu->getActive();
 		} else {
@@ -31,6 +35,7 @@ class AdvPortfolioRouter extends Router
 		}
 		$mView = (empty($menuItem->query['view'])) ? null : $menuItem->query['view'];
 		$mId = (empty($menuItem->query['id'])) ? null : $menuItem->query['id'];
+		
 		if (isset($query['view'])) {
 			$view = $query['view'];
 			if (empty($query['Itemid']) || empty($menuItem) || $menuItem->component != 'com_advportfolio') {
@@ -140,12 +145,12 @@ class AdvPortfolioRouter extends Router
 			if ($found == 0) {
 				if ($advanced) {
 					$db = Factory::getContainer()->get('DatabaseDriver');
-					$query = $db->getQuery(true)
+					$q = $db->getQuery(true)
 						->select($db->quoteName('id'))
 						->from('#__advportfolio_projects')
 						->where($db->quoteName('catid') . ' = ' . (int) $vars['catid'])
 						->where($db->quoteName('alias') . ' = ' . $db->quote(str_replace(':', '-', $segment)));
-					$db->setQuery($query);
+					$db->setQuery($q);
 					$id = $db->loadResult();
 				} else {
 					$id = $segment;
@@ -158,12 +163,4 @@ class AdvPortfolioRouter extends Router
 		}
 		return $vars;
 	}
-}
-function AdvPortfolioBuildRoute(&$query) {
-	$router = new AdvPortfolioRouter;
-	return $router->build($query);
-}
-function AdvPortfolioParseRoute($uri) {
-	$router = new AdvPortfolioRouter;
-	return $router->parse($uri);
 }
