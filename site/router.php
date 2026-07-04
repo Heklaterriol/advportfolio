@@ -13,6 +13,7 @@ use Joomla\CMS\Factory;
 use Joomla\CMS\Categories\Categories;
 use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Router\Router;
+use Joomla\CMS\Uri\Uri;
 
 class AdvPortfolioRouter extends Router
 {
@@ -100,8 +101,10 @@ class AdvPortfolioRouter extends Router
 		return $segments;
 	}
 
-	public function parse(&$segments)
+	public function parse(&$uri, $setVars = false)
 	{
+		$segments = $uri->getPath();
+		$segments = array_filter(explode('/', $segments));
 		$total = count($segments);
 		$vars = [];
 		for ($i = 0; $i < $total; $i++) {
