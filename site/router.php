@@ -163,7 +163,7 @@ function AdvPortfolioBuildRoute(&$query) {
 	$router = new AdvPortfolioRouter;
 	return $router->build($query);
 }
-function AdvPortfolioParseRoute($segments) {
+function AdvPortfolioParseRoute($uri) {
 	$router = new AdvPortfolioRouter;
-	return $router->parse($segments);
+	return $router->parse($uri);
 }
