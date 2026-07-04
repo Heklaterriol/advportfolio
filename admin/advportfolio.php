@@ -19,8 +19,14 @@ if (!Factory::getApplication()->getIdentity()->authorise('core.manage', 'com_adv
 	throw new Exception(Text::_('JERROR_ALERTNOAUTHOR'), 404);
 }
 
-// Include CSS and JS using WebAssetManager
+// Get WebAssetManager
 $wa = Factory::getApplication()->getDocument()->getWebAssetManager();
+
+// REGISTER assets first (REQUIRED in Joomla 6!)
+$wa->registerScript('com_advportfolio.admin.script', 'media/com_advportfolio/js/admin.script.js', [], ['defer' => true]);
+$wa->registerStyle('com_advportfolio.admin.style', 'media/com_advportfolio/css/admin.style.css');
+
+// THEN use them
 $wa->useScript('com_advportfolio.admin.script');
 $wa->useStyle('com_advportfolio.admin.style');
 
