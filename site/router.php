@@ -13,7 +13,6 @@ use Joomla\CMS\Factory;
 use Joomla\CMS\Categories\Categories;
 use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Router\Router;
-use Joomla\CMS\Uri\Uri;
 
 class AdvPortfolioRouter extends Router
 {
@@ -25,7 +24,7 @@ class AdvPortfolioRouter extends Router
 		$params = ComponentHelper::getParams('com_advportfolio');
 		$advanced = $params->get('sef_advanced_link', 0);
 		
-		// Parse the URL to get query parameters
+		// Get query parameters from URL
 		$query = $url->getQuery(true);
 		
 		if (empty($query['Itemid'])) {
