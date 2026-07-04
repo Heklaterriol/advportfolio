@@ -22,9 +22,9 @@ if (!Factory::getApplication()->getIdentity()->authorise('core.manage', 'com_adv
 // Get WebAssetManager
 $wa = Factory::getApplication()->getDocument()->getWebAssetManager();
 
-// REGISTER assets first (REQUIRED in Joomla 6!)
-$wa->registerScript('com_advportfolio.admin.script', 'media/com_advportfolio/js/admin.script.js', [], ['defer' => true]);
-$wa->registerStyle('com_advportfolio.admin.style', 'media/com_advportfolio/css/admin.style.css');
+// REGISTER assets with CORRECT paths
+$wa->registerScript('com_advportfolio.admin.script', 'media/js/admin.script.js', [], ['defer' => true]);
+$wa->registerStyle('com_advportfolio.admin.style', 'media/css/admin.style.css');
 
 // THEN use them
 $wa->useScript('com_advportfolio.admin.script');
