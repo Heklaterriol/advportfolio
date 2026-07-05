@@ -1,0 +1,165 @@
+.
+├── admin
+│   ├── access.xml
+│   ├── advportfolio.php
+│   ├── config.xml
+│   ├── controller.php
+│   ├── controllers
+│   │   ├── imagehandler.php
+│   │   ├── index.html
+│   │   ├── project.php
+│   │   └── projects.php
+│   ├── helpers
+│   │   ├── advportfolio.php
+│   │   ├── factory.php
+│   │   ├── html
+│   │   │   ├── advportfolio.php
+│   │   │   └── index.html
+│   │   ├── imagelib.php
+│   │   └── index.html
+│   ├── index.html
+│   ├── language
+│   │   ├── en-GB.com_advportfolio.ini
+│   │   └── en-GB.com_advportfolio.sys.ini
+│   ├── models
+│   │   ├── fields
+│   │   │   ├── imagehandler.php
+│   │   │   ├── images.php
+│   │   │   ├── index.html
+│   │   │   ├── modal
+│   │   │   │   ├── index.html
+│   │   │   │   └── project.php
+│   │   │   └── projectordering.php
+│   │   ├── forms
+│   │   │   ├── index.html
+│   │   │   └── project.xml
+│   │   ├── imagehandler.php
+│   │   ├── index.html
+│   │   ├── project.php
+│   │   └── projects.php
+│   ├── sql
+│   │   ├── index.html
+│   │   ├── install.mysql.utf8.sql
+│   │   └── uninstall.mysql.utf8.sql
+│   ├── tables
+│   │   ├── index.html
+│   │   └── project.php
+│   └── views
+│       ├── dashboard
+│       │   ├── index.html
+│       │   ├── tmpl
+│       │   │   ├── default_button.php
+│       │   │   ├── default.php
+│       │   │   └── index.html
+│       │   └── view.html.php
+│       ├── imagehandler
+│       │   ├── index.html
+│       │   ├── tmpl
+│       │   │   ├── default_dropzoneupload.php
+│       │   │   ├── default_image.php
+│       │   │   ├── default_upload.php
+│       │   │   ├── default.php
+│       │   │   └── index.html
+│       │   └── view.html.php
+│       ├── index.html
+│       ├── project
+│       │   ├── index.html
+│       │   ├── tmpl
+│       │   │   ├── edit_metadata.php
+│       │   │   ├── edit_params.php
+│       │   │   ├── edit.php
+│       │   │   └── index.html
+│       │   └── view.html.php
+│       └── projects
+│           ├── index.html
+│           ├── tmpl
+│           │   ├── default_batch.php
+│           │   ├── default.php
+│           │   ├── index.html
+│           │   └── modal.php
+│           └── view.html.php
+├── advportfolio.xml
+├── full-structure.txt
+├── install.php
+├── media
+│   ├── css
+│   │   ├── admin.style.css
+│   │   ├── dropzone.css
+│   │   ├── index.html
+│   │   ├── jquery.fancybox.css
+│   │   └── style.css
+│   ├── images
+│   │   ├── blank.gif
+│   │   ├── delete.png
+│   │   ├── fancybox_loading.gif
+│   │   ├── fancybox_overlay.png
+│   │   ├── fancybox_sprite.png
+│   │   ├── filter_divider.png
+│   │   ├── flex_next.png
+│   │   ├── flex_prev.png
+│   │   ├── folder.png
+│   │   ├── icon-64-categories.png
+│   │   ├── icon-64-config.png
+│   │   ├── icon-64-projects.png
+│   │   ├── icon-64-tags.png
+│   │   ├── index.html
+│   │   ├── list_check.png
+│   │   ├── overlay_bg.png
+│   │   ├── overlay.png
+│   │   ├── pnav_next.png
+│   │   ├── pnav_prev.png
+│   │   ├── spritemap.png
+│   │   └── spritemap@2x.png
+│   ├── index.html
+│   └── js
+│       ├── admin.script.js
+│       ├── dropzone.js
+│       ├── dropzone.min.js
+│       ├── index.html
+│       ├── jquery.fancybox.js
+│       ├── jquery.fancybox.min.js
+│       ├── jquery.flexslider.js
+│       ├── jquery.flexslider.min.js
+│       ├── jquery.isotope.js
+│       ├── jquery.isotope.min.js
+│       └── script.js
+└── site
+    ├── advportfolio.php
+    ├── controller.php
+    ├── controllers
+    │   └── index.html
+    ├── helpers
+    │   ├── advportfolio.php
+    │   ├── category.php
+    │   ├── image.php
+    │   ├── index.html
+    │   └── route.php
+    ├── index.html
+    ├── language
+    │   └── en-GB.com_advportfolio.ini
+    ├── metadata.xml
+    ├── models
+    │   ├── index.html
+    │   ├── project.php
+    │   └── projects.php
+    ├── router.php
+    └── views
+        ├── index.html
+        ├── project
+        │   ├── index.html
+        │   ├── tmpl
+        │   │   ├── default_description.php
+        │   │   ├── default_images.php
+        │   │   ├── default_media.php
+        │   │   ├── default_video.php
+        │   │   ├── default.php
+        │   │   ├── default.xml
+        │   │   └── index.html
+        │   └── view.html.php
+        └── projects
+            ├── index.html
+            ├── tmpl
+            │   ├── default.php
+            │   ├── default.xml
+            │   └── index.html
+            └── view.html.php
