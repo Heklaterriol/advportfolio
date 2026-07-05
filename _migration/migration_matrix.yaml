@@ -1,0 +1,886 @@
+migration_matrix:
+  files:
+
+    # ===================== ADMIN: ROOT =====================
+    - source: "admin/access.xml"
+      target: "administrator/components/com_advportfolio/access.xml"
+      type: acl_config
+      dependencies: []
+      status: done
+
+    - source: "admin/advportfolio.php"
+      target: "administrator/components/com_advportfolio/services/provider.php + src/Administrator/Extension/AdvportfolioComponent.php"
+      type: entrypoint
+      dependencies: ["JFactory", "JError", "JText", "JHtml", "JControllerLegacy"]
+      status: done
+
+    - source: "admin/config.xml"
+      target: "administrator/components/com_advportfolio/config.xml"
+      type: config
+      dependencies: []
+      status: done
+
+    - source: "admin/controller.php"
+      target: "administrator/components/com_advportfolio/src/Controller/DisplayController.php"
+      type: controller
+      dependencies: ["JControllerLegacy", "JFilterInput", "JText", "JRoute", "helpers/advportfolio.php"]
+      status: done
+
+    - source: "admin/controllers/imagehandler.php"
+      target: "administrator/components/com_advportfolio/src/Controller/ImagehandlerController.php"
+      type: controller
+      dependencies: ["JControllerLegacy", "JFactory", "JClientHelper", "JSession", "JRequest", "JRoute", "JError", "JText", "JPath", "JFile", "JFolder", "AdvPortfolioImageLib"]
+      status: done
+
+    - source: "admin/controllers/index.html"
+      target: "ENTFÄLLT (kein Direktzugriffs-Schutz mehr nötig, PSR-4 Autoloading)"
+      type: security_placeholder
+      dependencies: []
+      status: done
+
+    - source: "admin/controllers/project.php"
+      target: "administrator/components/com_advportfolio/src/Controller/ProjectController.php"
+      type: controller
+      dependencies: ["JControllerForm", "JFactory", "JArrayHelper", "JSession", "JText", "JRoute", "JModelLegacy"]
+      status: done
+
+    - source: "admin/controllers/projects.php"
+      target: "administrator/components/com_advportfolio/src/Controller/ProjectsController.php"
+      type: controller
+      dependencies: ["JControllerAdmin", "JFactory", "JArrayHelper", "AdvPortfolioModel"]
+      status: done
+
+    - source: "admin/helpers/advportfolio.php"
+      target: "administrator/components/com_advportfolio/src/Helper/AdvportfolioHelper.php"
+      type: helper
+      dependencies: ["JFactory", "JHtmlSidebar", "JText", "JToolBarHelper"]
+      status: done
+
+    - source: "admin/helpers/factory.php"
+      target: "administrator/components/com_advportfolio/services/provider.php (MvcFactory-Registrierung)"
+      type: service_provider
+      dependencies: ["JTable", "JModelLegacy", "AdvPortfolioModel"]
+      status: done
+
+    - source: "admin/helpers/html/advportfolio.php"
+      target: "administrator/components/com_advportfolio/src/Helper/HtmlAdvportfolioHelper.php"
+      type: helper
+      dependencies: ["JHtml", "JFactory", "JUri", "JFile", "AdvPortfolioImageLib"]
+      status: done
+
+    - source: "admin/helpers/html/index.html"
+      target: "ENTFÄLLT"
+      type: security_placeholder
+      dependencies: []
+      status: done
+
+    - source: "admin/helpers/imagelib.php"
+      target: "administrator/components/com_advportfolio/src/Helper/ImageLibHelper.php"
+      type: helper
+      dependencies: ["JFile", "JFolder", "JError", "JText"]
+      status: done
+
+    - source: "admin/helpers/index.html"
+      target: "ENTFÄLLT"
+      type: security_placeholder
+      dependencies: []
+      status: done
+
+    - source: "admin/index.html"
+      target: "ENTFÄLLT"
+      type: security_placeholder
+      dependencies: []
+      status: done
+
+    - source: "admin/language/en-GB.com_advportfolio.ini"
+      target: "administrator/language/en-GB/com_advportfolio.ini"
+      type: language
+      dependencies: []
+      status: done
+
+    - source: "admin/language/en-GB.com_advportfolio.sys.ini"
+      target: "administrator/language/en-GB/com_advportfolio.sys.ini"
+      type: language
+      dependencies: []
+      status: done
+
+    # ===================== ADMIN: MODELS / FIELDS / FORMS =====================
+    - source: "admin/models/fields/imagehandler.php"
+      target: "administrator/components/com_advportfolio/src/Field/ImagehandlerField.php"
+      type: field
+      dependencies: ["JFormField", "JHtml", "JFactory", "JRoute", "JText"]
+      status: done
+
+    - source: "admin/models/fields/images.php"
+      target: "administrator/components/com_advportfolio/src/Field/ImagesField.php"
+      type: field
+      dependencies: ["JFormField", "JHtml", "JFactory", "JRoute", "JText", "AdvPortfolioHelper"]
+      status: pending
+
+    - source: "admin/models/fields/index.html"
+      target: "ENTFÄLLT"
+      type: security_placeholder
+      dependencies: []
+      status: do not touch
+
+    - source: "admin/models/fields/modal/index.html"
+      target: "ENTFÄLLT"
+      type: security_placeholder
+      dependencies: []
+      status: do not touch
+
+    - source: "admin/models/fields/modal/project.php"
+      target: "administrator/components/com_advportfolio/src/Field/Modal/ProjectField.php"
+      type: field
+      dependencies: ["JFormField", "JHtml", "JFactory", "JError", "JText", "JSession"]
+      status: pending
+
+    - source: "admin/models/fields/projectordering.php"
+      target: "administrator/components/com_advportfolio/src/Field/ProjectorderingField.php"
+      type: field
+      dependencies: ["JFormField", "JHtml"]
+      status: pending
+
+    - source: "admin/models/forms/index.html"
+      target: "ENTFÄLLT"
+      type: security_placeholder
+      dependencies: []
+      status: do not touch
+
+    - source: "admin/models/forms/project.xml"
+      target: "administrator/components/com_advportfolio/forms/project.xml"
+      type: form_xml
+      dependencies: ["Field/ImagesField", "Field/Modal/ProjectField", "Field/ProjectorderingField"]
+      status: pending
+
+    - source: "admin/models/imagehandler.php"
+      target: "administrator/components/com_advportfolio/src/Model/ImagehandlerModel.php"
+      type: model
+      dependencies: ["JModelList", "JFactory", "JFile", "JFolder", "JPath", "AdvPortfolioHelper"]
+      status: pending
+
+    - source: "admin/models/index.html"
+      target: "ENTFÄLLT"
+      type: security_placeholder
+      dependencies: []
+      status: do not touch
+
+    - source: "admin/models/project.php"
+      target: "administrator/components/com_advportfolio/src/Model/ProjectModel.php"
+      type: model
+      dependencies: ["JModelAdmin", "JFactory", "JTable", "AdvPortfolioTable", "JForm", "JApplication", "AdvPortfolioFactory"]
+      status: pending
+
+    - source: "admin/models/projects.php"
+      target: "administrator/components/com_advportfolio/src/Model/ProjectsModel.php"
+      type: model
+      dependencies: ["JModelList", "JFactory", "JComponentHelper"]
+      status: pending
+
+    # ===================== ADMIN: SQL =====================
+    - source: "admin/sql/index.html"
+      target: "ENTFÄLLT"
+      type: security_placeholder
+      dependencies: []
+      status: do not touch
+
+    - source: "admin/sql/install.mysql.utf8.sql"
+      target: "administrator/components/com_advportfolio/sql/install.mysql.utf8.sql"
+      type: sql
+      dependencies: []
+      status: pending
+
+    - source: "admin/sql/uninstall.mysql.utf8.sql"
+      target: "administrator/components/com_advportfolio/sql/uninstall.mysql.utf8.sql"
+      type: sql
+      dependencies: []
+      status: pending
+
+    # ===================== ADMIN: TABLES =====================
+    - source: "admin/tables/index.html"
+      target: "ENTFÄLLT"
+      type: security_placeholder
+      dependencies: []
+      status: do not touch
+
+    - source: "admin/tables/project.php"
+      target: "administrator/components/com_advportfolio/src/Table/ProjectTable.php"
+      type: table
+      dependencies: ["JTable", "JFactory", "JText", "JApplication", "JString", "JArrayHelper", "AdvPortfolioTable"]
+      status: pending
+
+    # ===================== ADMIN: VIEWS - DASHBOARD =====================
+    - source: "admin/views/dashboard/index.html"
+      target: "ENTFÄLLT"
+      type: security_placeholder
+      dependencies: []
+      status: do not touch
+
+    - source: "admin/views/dashboard/tmpl/default_button.php"
+      target: "administrator/components/com_advportfolio/tmpl/dashboard/default_button.php"
+      type: tmpl_layout
+      dependencies: ["JHtml"]
+      status: pending
+
+    - source: "admin/views/dashboard/tmpl/default.php"
+      target: "administrator/components/com_advportfolio/tmpl/dashboard/default.php"
+      type: tmpl_layout
+      dependencies: ["JText", "JUri", "AdvPortfolioFactory"]
+      status: pending
+
+    - source: "admin/views/dashboard/tmpl/index.html"
+      target: "ENTFÄLLT"
+      type: security_placeholder
+      dependencies: []
+      status: do not touch
+
+    - source: "admin/views/dashboard/view.html.php"
+      target: "administrator/components/com_advportfolio/src/View/Dashboard/HtmlView.php"
+      type: view
+      dependencies: ["JViewLegacy", "AdvPortfolioHelper", "JHtmlSidebar", "JText", "JToolBarHelper", "JRoute"]
+      status: pending
+
+    # ===================== ADMIN: VIEWS - IMAGEHANDLER =====================
+    - source: "admin/views/imagehandler/index.html"
+      target: "ENTFÄLLT"
+      type: security_placeholder
+      dependencies: []
+      status: do not touch
+
+    - source: "admin/views/imagehandler/tmpl/default_dropzoneupload.php"
+      target: "administrator/components/com_advportfolio/tmpl/imagehandler/default_dropzoneupload.php"
+      type: tmpl_layout
+      dependencies: ["JHtml", "JRoute", "JText"]
+      status: pending
+
+    - source: "admin/views/imagehandler/tmpl/default_image.php"
+      target: "administrator/components/com_advportfolio/tmpl/imagehandler/default_image.php"
+      type: tmpl_layout
+      dependencies: ["JHtml", "JRoute", "JText"]
+      status: pending
+
+    - source: "admin/views/imagehandler/tmpl/default_upload.php"
+      target: "administrator/components/com_advportfolio/tmpl/imagehandler/default_upload.php"
+      type: tmpl_layout
+      dependencies: ["JText"]
+      status: pending
+
+    - source: "admin/views/imagehandler/tmpl/default.php"
+      target: "administrator/components/com_advportfolio/tmpl/imagehandler/default.php"
+      type: tmpl_layout
+      dependencies: ["JHtml", "JRoute", "JText", "AdvPortfolioFactory"]
+      status: pending
+
+    - source: "admin/views/imagehandler/tmpl/index.html"
+      target: "ENTFÄLLT"
+      type: security_placeholder
+      dependencies: []
+      status: do not touch
+
+    - source: "admin/views/imagehandler/view.html.php"
+      target: "administrator/components/com_advportfolio/src/View/Imagehandler/HtmlView.php"
+      type: view
+      dependencies: ["JViewLegacy", "JFactory", "JError", "JClientHelper"]
+      status: pending
+
+    # ===================== ADMIN: VIEWS - PROJECT =====================
+    - source: "admin/views/index.html"
+      target: "ENTFÄLLT"
+      type: security_placeholder
+      dependencies: []
+      status: do not touch
+
+    - source: "admin/views/project/index.html"
+      target: "ENTFÄLLT"
+      type: security_placeholder
+      dependencies: []
+      status: do not touch
+
+    - source: "admin/views/project/tmpl/edit_metadata.php"
+      target: "administrator/components/com_advportfolio/tmpl/project/edit_metadata.php"
+      type: tmpl_layout
+      dependencies: ["JLayoutHelper"]
+      status: pending
+
+    - source: "admin/views/project/tmpl/edit_params.php"
+      target: "administrator/components/com_advportfolio/tmpl/project/edit_params.php"
+      type: tmpl_layout
+      dependencies: ["JText"]
+      status: pending
+
+    - source: "admin/views/project/tmpl/edit.php"
+      target: "administrator/components/com_advportfolio/tmpl/project/edit.php"
+      type: tmpl_layout
+      dependencies: ["JHtml", "JText", "JFactory", "JLayoutHelper", "JRoute", "AdvPortfolioFactory"]
+      status: pending
+
+    - source: "admin/views/project/tmpl/index.html"
+      target: "ENTFÄLLT"
+      type: security_placeholder
+      dependencies: []
+      status: do not touch
+
+    - source: "admin/views/project/view.html.php"
+      target: "administrator/components/com_advportfolio/src/View/Project/HtmlView.php"
+      type: view
+      dependencies: ["JViewLegacy", "JError", "JFactory", "AdvPortfolioHelper", "JText", "JToolBarHelper"]
+      status: pending
+
+    # ===================== ADMIN: VIEWS - PROJECTS =====================
+    - source: "admin/views/projects/index.html"
+      target: "ENTFÄLLT"
+      type: security_placeholder
+      dependencies: []
+      status: do not touch
+
+    - source: "admin/views/projects/tmpl/default_batch.php"
+      target: "administrator/components/com_advportfolio/tmpl/projects/default_batch.php"
+      type: tmpl_layout
+      dependencies: ["JText", "JHtml"]
+      status: pending
+
+    - source: "admin/views/projects/tmpl/default.php"
+      target: "administrator/components/com_advportfolio/tmpl/projects/default.php"
+      type: tmpl_layout
+      dependencies: ["JHtml", "JText", "JFactory", "JRoute", "AdvPortfolioFactory"]
+      status: pending
+
+    - source: "admin/views/projects/tmpl/index.html"
+      target: "ENTFÄLLT"
+      type: security_placeholder
+      dependencies: []
+      status: do not touch
+
+    - source: "admin/views/projects/tmpl/modal.php"
+      target: "administrator/components/com_advportfolio/tmpl/projects/modal.php"
+      type: tmpl_layout
+      dependencies: ["JFactory", "JSession", "JText", "JHtml", "JRoute", "JLanguageMultilang", "AdvPortfolioFactory"]
+      status: pending
+
+    - source: "admin/views/projects/view.html.php"
+      target: "administrator/components/com_advportfolio/src/View/Projects/HtmlView.php"
+      type: view
+      dependencies: ["JViewLegacy", "JHtmlSidebar", "JText", "JHtml", "JError", "AdvPortfolioHelper", "JFactory", "JToolBar", "JToolBarHelper"]
+      status: pending
+
+    # ===================== KOMPONENTEN-ROOT =====================
+    - source: "advportfolio.xml"
+      target: "advportfolio.xml (Manifest aktualisiert: <namespace>, <files>/<administration> Pfade, Schema-Version)"
+      type: manifest
+      dependencies: []
+      status: pending
+
+    - source: "install.php"
+      target: "script.php (namespaced InstallerScript, implements InstallerScriptInterface)"
+      type: installer_script
+      dependencies: ["JTable", "AdvPortfolioHelperRoute"]
+      status: pending
+
+    # ===================== MEDIA =====================
+    - source: "media/css/admin.style.css"
+      target: "media/com_advportfolio/css/admin.style.css"
+      type: asset_css
+      dependencies: []
+      status: pending
+
+    - source: "media/css/dropzone.css"
+      target: "media/com_advportfolio/css/dropzone.css"
+      type: asset_css
+      dependencies: []
+      status: pending
+
+    - source: "media/css/index.html"
+      target: "ENTFÄLLT"
+      type: security_placeholder
+      dependencies: []
+      status: do not touch
+
+    - source: "media/css/jquery.fancybox.css"
+      target: "media/com_advportfolio/css/jquery.fancybox.css"
+      type: asset_css
+      dependencies: []
+      status: pending
+
+    - source: "media/css/style.css"
+      target: "media/com_advportfolio/css/style.css"
+      type: asset_css
+      dependencies: []
+      status: pending
+
+    - source: "media/images/blank.gif"
+      target: "media/com_advportfolio/images/blank.gif"
+      type: asset_image
+      dependencies: []
+      status: pending
+
+    - source: "media/images/delete.png"
+      target: "media/com_advportfolio/images/delete.png"
+      type: asset_image
+      dependencies: []
+      status: pending
+
+    - source: "media/images/fancybox_loading.gif"
+      target: "media/com_advportfolio/images/fancybox_loading.gif"
+      type: asset_image
+      dependencies: []
+      status: pending
+
+    - source: "media/images/fancybox_overlay.png"
+      target: "media/com_advportfolio/images/fancybox_overlay.png"
+      type: asset_image
+      dependencies: []
+      status: pending
+
+    - source: "media/images/fancybox_sprite.png"
+      target: "media/com_advportfolio/images/fancybox_sprite.png"
+      type: asset_image
+      dependencies: []
+      status: pending
+
+    - source: "media/images/filter_divider.png"
+      target: "media/com_advportfolio/images/filter_divider.png"
+      type: asset_image
+      dependencies: []
+      status: pending
+
+    - source: "media/images/flex_next.png"
+      target: "media/com_advportfolio/images/flex_next.png"
+      type: asset_image
+      dependencies: []
+      status: pending
+
+    - source: "media/images/flex_prev.png"
+      target: "media/com_advportfolio/images/flex_prev.png"
+      type: asset_image
+      dependencies: []
+      status: pending
+
+    - source: "media/images/folder.png"
+      target: "media/com_advportfolio/images/folder.png"
+      type: asset_image
+      dependencies: []
+      status: pending
+
+    - source: "media/images/icon-64-categories.png"
+      target: "media/com_advportfolio/images/icon-64-categories.png"
+      type: asset_image
+      dependencies: []
+      status: pending
+
+    - source: "media/images/icon-64-config.png"
+      target: "media/com_advportfolio/images/icon-64-config.png"
+      type: asset_image
+      dependencies: []
+      status: pending
+
+    - source: "media/images/icon-64-projects.png"
+      target: "media/com_advportfolio/images/icon-64-projects.png"
+      type: asset_image
+      dependencies: []
+      status: pending
+
+    - source: "media/images/icon-64-tags.png"
+      target: "media/com_advportfolio/images/icon-64-tags.png"
+      type: asset_image
+      dependencies: []
+      status: pending
+
+    - source: "media/images/index.html"
+      target: "ENTFÄLLT"
+      type: security_placeholder
+      dependencies: []
+      status: do not touch
+
+    - source: "media/images/list_check.png"
+      target: "media/com_advportfolio/images/list_check.png"
+      type: asset_image
+      dependencies: []
+      status: pending
+
+    - source: "media/images/overlay_bg.png"
+      target: "media/com_advportfolio/images/overlay_bg.png"
+      type: asset_image
+      dependencies: []
+      status: pending
+
+    - source: "media/images/overlay.png"
+      target: "media/com_advportfolio/images/overlay.png"
+      type: asset_image
+      dependencies: []
+      status: pending
+
+    - source: "media/images/pnav_next.png"
+      target: "media/com_advportfolio/images/pnav_next.png"
+      type: asset_image
+      dependencies: []
+      status: pending
+
+    - source: "media/images/pnav_prev.png"
+      target: "media/com_advportfolio/images/pnav_prev.png"
+      type: asset_image
+      dependencies: []
+      status: pending
+
+    - source: "media/images/spritemap.png"
+      target: "media/com_advportfolio/images/spritemap.png"
+      type: asset_image
+      dependencies: []
+      status: pending
+
+    - source: "media/images/spritemap@2x.png"
+      target: "media/com_advportfolio/images/spritemap@2x.png"
+      type: asset_image
+      dependencies: []
+      status: pending
+
+    - source: "media/index.html"
+      target: "ENTFÄLLT"
+      type: security_placeholder
+      dependencies: []
+      status: do not touch
+
+    - source: "media/js/admin.script.js"
+      target: "media/com_advportfolio/js/admin.script.js"
+      type: asset_js
+      dependencies: []
+      status: pending
+
+    - source: "media/js/dropzone.js"
+      target: "media/com_advportfolio/js/dropzone.js"
+      type: asset_js
+      dependencies: []
+      status: pending
+
+    - source: "media/js/dropzone.min.js"
+      target: "media/com_advportfolio/js/dropzone.min.js"
+      type: asset_js
+      dependencies: []
+      status: pending
+
+    - source: "media/js/index.html"
+      target: "ENTFÄLLT"
+      type: security_placeholder
+      dependencies: []
+      status: do not touch
+
+    - source: "media/js/jquery.fancybox.js"
+      target: "media/com_advportfolio/js/jquery.fancybox.js"
+      type: asset_js
+      dependencies: []
+      status: pending
+
+    - source: "media/js/jquery.fancybox.min.js"
+      target: "media/com_advportfolio/js/jquery.fancybox.min.js"
+      type: asset_js
+      dependencies: []
+      status: pending
+
+    - source: "media/js/jquery.flexslider.js"
+      target: "media/com_advportfolio/js/jquery.flexslider.js"
+      type: asset_js
+      dependencies: []
+      status: pending
+
+    - source: "media/js/jquery.flexslider.min.js"
+      target: "media/com_advportfolio/js/jquery.flexslider.min.js"
+      type: asset_js
+      dependencies: []
+      status: pending
+
+    - source: "media/js/jquery.isotope.js"
+      target: "media/com_advportfolio/js/jquery.isotope.js"
+      type: asset_js
+      dependencies: []
+      status: pending
+
+    - source: "media/js/jquery.isotope.min.js"
+      target: "media/com_advportfolio/js/jquery.isotope.min.js"
+      type: asset_js
+      dependencies: []
+      status: pending
+
+    - source: "media/js/script.js"
+      target: "media/com_advportfolio/js/script.js"
+      type: asset_js
+      dependencies: []
+      status: pending
+
+    # ===================== SITE: ROOT =====================
+    - source: "site/advportfolio.php"
+      target: "components/com_advportfolio/services/provider.php + src/Site/Extension/AdvportfolioComponent.php"
+      type: entrypoint
+      dependencies: ["JHtml", "JControllerLegacy", "JFactory"]
+      status: pending
+
+    - source: "site/controller.php"
+      target: "components/com_advportfolio/src/Controller/DisplayController.php"
+      type: controller
+      dependencies: ["JControllerLegacy", "JFilterInput"]
+      status: pending
+
+    - source: "site/controllers/index.html"
+      target: "ENTFÄLLT"
+      type: security_placeholder
+      dependencies: []
+      status: do not touch
+
+    - source: "site/helpers/advportfolio.php"
+      target: "components/com_advportfolio/src/Helper/AdvportfolioHelper.php"
+      type: helper
+      dependencies: ["JModelLegacy", "AdvPortfolioModel"]
+      status: pending
+
+    - source: "site/helpers/category.php"
+      target: "components/com_advportfolio/src/Helper/AdvportfolioCategories.php"
+      type: helper
+      dependencies: ["JCategories"]
+      status: pending
+
+    - source: "site/helpers/image.php"
+      target: "components/com_advportfolio/src/Helper/ImageHelper.php"
+      type: helper
+      dependencies: []
+      status: pending
+
+    - source: "site/helpers/index.html"
+      target: "ENTFÄLLT"
+      type: security_placeholder
+      dependencies: []
+      status: do not touch
+
+    - source: "site/helpers/route.php"
+      target: "components/com_advportfolio/src/Service/Router.php (Routing-Logik in RouterInterface integriert)"
+      type: helper
+      dependencies: ["JLanguageMultilang", "JFactory", "JComponentHelper"]
+      status: pending
+
+    - source: "site/index.html"
+      target: "ENTFÄLLT"
+      type: security_placeholder
+      dependencies: []
+      status: do not touch
+
+    - source: "site/language/en-GB.com_advportfolio.ini"
+      target: "language/en-GB/com_advportfolio.ini"
+      type: language
+      dependencies: []
+      status: pending
+
+    - source: "site/metadata.xml"
+      target: "components/com_advportfolio/metadata.xml"
+      type: config
+      dependencies: []
+      status: pending
+
+    - source: "site/models/index.html"
+      target: "ENTFÄLLT"
+      type: security_placeholder
+      dependencies: []
+      status: do not touch
+
+    - source: "site/models/project.php"
+      target: "components/com_advportfolio/src/Model/ProjectModel.php"
+      type: model
+      dependencies: ["JModelItem", "JFactory", "JError", "JText", "AdvPortfolioHelper"]
+      status: pending
+
+    - source: "site/models/projects.php"
+      target: "components/com_advportfolio/src/Model/ProjectsModel.php"
+      type: model
+      dependencies: ["JModelList", "JFactory", "JArrayHelper", "JLanguageMultilang"]
+      status: pending
+
+    - source: "site/router.php"
+      target: "components/com_advportfolio/src/Service/Router.php"
+      type: router
+      dependencies: ["JComponentRouterBase", "JFactory", "JComponentHelper", "JCategories", "AdvPortfolioRouter", "AdvPortfolioBuildRoute", "AdvPortfolioParseRoute"]
+      status: pending
+
+    # ===================== SITE: VIEWS - PROJECT =====================
+    - source: "site/views/index.html"
+      target: "ENTFÄLLT"
+      type: security_placeholder
+      dependencies: []
+      status: do not touch
+
+    - source: "site/views/project/index.html"
+      target: "ENTFÄLLT"
+      type: security_placeholder
+      dependencies: []
+      status: do not touch
+
+    - source: "site/views/project/tmpl/default_description.php"
+      target: "components/com_advportfolio/tmpl/project/default_description.php"
+      type: tmpl_layout
+      dependencies: ["JText"]
+      status: pending
+
+    - source: "site/views/project/tmpl/default_images.php"
+      target: "components/com_advportfolio/tmpl/project/default_images.php"
+      type: tmpl_layout
+      dependencies: ["JHtml"]
+      status: pending
+
+    - source: "site/views/project/tmpl/default_media.php"
+      target: "components/com_advportfolio/tmpl/project/default_media.php"
+      type: tmpl_layout
+      dependencies: []
+      status: pending
+
+    - source: "site/views/project/tmpl/default_video.php"
+      target: "components/com_advportfolio/tmpl/project/default_video.php"
+      type: tmpl_layout
+      dependencies: []
+      status: pending
+
+    - source: "site/views/project/tmpl/default.php"
+      target: "components/com_advportfolio/tmpl/project/default.php"
+      type: tmpl_layout
+      dependencies: ["JHtml", "AdvPortfolioHelper", "AdvPortfolioHelperRoute"]
+      status: pending
+
+    - source: "site/views/project/tmpl/default.xml"
+      target: "components/com_advportfolio/tmpl/project/default.xml"
+      type: tmpl_layout_metadata
+      dependencies: []
+      status: pending
+
+    - source: "site/views/project/tmpl/index.html"
+      target: "ENTFÄLLT"
+      type: security_placeholder
+      dependencies: []
+      status: do not touch
+
+    - source: "site/views/project/view.html.php"
+      target: "components/com_advportfolio/src/View/Project/HtmlView.php"
+      type: view
+      dependencies: ["JViewLegacy", "JFactory", "JError", "JText"]
+      status: pending
+
+    # ===================== SITE: VIEWS - PROJECTS =====================
+    - source: "site/views/projects/index.html"
+      target: "ENTFÄLLT"
+      type: security_placeholder
+      dependencies: []
+      status: do not touch
+
+    - source: "site/views/projects/tmpl/default.php"
+      target: "components/com_advportfolio/tmpl/projects/default.php"
+      type: tmpl_layout
+      dependencies: ["JHtml", "JText", "JApplication", "AdvPortfolioHelper", "AdvPortfolioHelperRoute"]
+      status: pending
+
+    - source: "site/views/projects/tmpl/default.xml"
+      target: "components/com_advportfolio/tmpl/projects/default.xml"
+      type: tmpl_layout_metadata
+      dependencies: []
+      status: pending
+
+    - source: "site/views/projects/tmpl/index.html"
+      target: "ENTFÄLLT"
+      type: security_placeholder
+      dependencies: []
+      status: do not touch
+
+    - source: "site/views/projects/view.html.php"
+      target: "components/com_advportfolio/src/View/Projects/HtmlView.php"
+      type: view
+      dependencies: ["JViewLegacy", "JText", "JFactory", "JError"]
+      status: pending
+
+    # ===================== DOKUMENTATION (nicht Teil der Komponente) =====================
+    - source: "full-structure.txt"
+      target: "n/a – Entwicklungsdokumentation, nicht Teil des zu migrierenden Komponenten-Pakets"
+      type: documentation
+      dependencies: []
+      status: pending
+
+  global_dependencies:
+    legacy_classes:
+      - JFactory
+      - JModelLegacy
+      - JViewLegacy
+      - JControllerLegacy
+      - JControllerAdmin
+      - JControllerForm
+      - JModelAdmin
+      - JModelList
+      - JModelItem
+      - JTable
+      - JForm
+      - JFormField
+      - JHtml
+      - JHtmlSidebar
+      - JText
+      - JRoute
+      - JError
+      - JSession
+      - JRequest
+      - JArrayHelper
+      - JString
+      - JFile
+      - JFolder
+      - JPath
+      - JUri
+      - JApplication
+      - JComponentHelper
+      - JComponentRouterBase
+      - JCategories
+      - JClientHelper
+      - JLanguageMultilang
+      - JToolBar
+      - JToolBarHelper
+      - JLayoutHelper
+      - JFilterInput
+
+  architecture_notes: |
+    Die Komponente folgt dem klassischen Joomla-3-MVC-Muster mit strikter
+    admin/site-Trennung und global gültigen (nicht-namespaced) Klassennamen
+    nach dem Schema "AdvPortfolio<Typ><Entität>" (z.B. AdvPortfolioModelProject,
+    AdvPortfolioViewProjects, AdvPortfolioControllerImageHandler). Views nutzen
+    das klassische view.html.php + tmpl/*.php-Layoutmuster; Templates sind
+    reines prozedurales PHP mit direkten Aufrufen von JHtml::_, JText::_ und
+    JRoute::_.
+
+    Für Joomla 6 (PSR-4/Namespaces seit Joomla 4) ergeben sich folgende
+    strukturelle Verschiebungen:
+
+    1. Alle Klassen wandern unter src/ in die Namespaces
+       Joomla\Component\Advportfolio\Administrator\... bzw. ...\Site\...,
+       mit Klassennamen wie ProjectModel, ProjectController, HtmlView
+       (Klassenname ergibt sich aus dem Namespace/Ordnerpfad, Präfix
+       "AdvPortfolio" entfällt).
+    2. Alle *.tmpl-Layoutdateien bleiben prozedurales PHP, verbleiben aber
+       außerhalb von src/ in unveränderten tmpl/-Ordnern (kein Autoloading
+       für Layouts).
+    3. admin/advportfolio.php und site/advportfolio.php (klassische
+       Entry-Point-Dateien, die JControllerLegacy::getInstance() aufrufen)
+       entfallen vollständig zugunsten von services/provider.php und
+       src/.../Extension/AdvportfolioComponent.php (ComponentInterface,
+       MVCFactory, RouterFactory, DI-Container).
+    4. admin/helpers/factory.php (AdvPortfolioFactory) wird obsolet, da die
+       MVCFactory-Registrierung diese Aufgabe im Service Provider übernimmt.
+    5. site/helpers/route.php (statische Router-Hilfsfunktionen) verschmilzt
+       mit site/router.php zu einem einzigen Router-Service, der
+       RouterInterface implementiert.
+    6. Alle index.html-Platzhalter zum Verzeichnisschutz sind mit
+       PSR-4-Autoloading funktionslos und werden nicht migriert.
+    7. Sprachdateien wandern aus dem Komponentenordner in die zentralen
+       language/-Wurzelverzeichnisse (administrator/language/en-GB/,
+       language/en-GB/).
+    8. Medien-Assets (CSS/JS/Bilder) wandern unter media/com_advportfolio/
+       gemäß dem Joomla-4+-Media-Manager-Schema.
+    9. Alle verwendeten Legacy-Klassen (siehe global_dependencies) müssen
+       durch ihre namespaced CMS-Pendants ersetzt werden, z.B.
+       JFactory::getUser() -> Joomla\CMS\Factory::getApplication()->getIdentity(),
+       JText::_() -> Joomla\CMS\Language\Text::_(),
+       JHtml::_() -> Joomla\CMS\HTML\HTMLHelper::_(),
+       JTable::getInstance() -> MVCFactory/Table-Service,
+       JRoute::_() -> Joomla\CMS\Router\Route::_().
+    10. Veraltete/entfernte APIs ohne direktes Pendant in Joomla 6 (JError,
+        JRequest, JApplication, JArrayHelper, JString, JFileterInput-Tippfehler
+        in admin/controller.php) erfordern manuelle Neuimplementierung, keine
+        1:1-Ersetzung.
+
+    Diese Matrix ist ausschließlich eine Planungsgrundlage; es wurde keine
+    Migration durchgeführt.
