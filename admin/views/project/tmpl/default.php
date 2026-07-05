@@ -14,8 +14,17 @@ use Joomla\CMS\Layout\LayoutHelper;
 use Joomla\CMS\Helper\ContentHelper;
 
 $wa = Factory::getApplication()->getDocument()->getWebAssetManager();
-$wa->useScript('com_advportfolio.admin.script');
-$wa->useStyle('com_advportfolio.admin.style');
+wa->registerScript(
+    'com_advportfolio.admin.script',
+    'media/com_advportfolio/js/admin.script.js',
+    [],
+    ['defer' => true]
+);
+
+$wa->registerStyle(
+    'com_advportfolio.admin.style',
+    'media/com_advportfolio/css/admin.style.css'
+);
 
 ContentHelper::addIncludePath(JPATH_COMPONENT . '/helpers/html');
 

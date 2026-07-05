@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<extension type="component" version="6.0" method="upgrade">
+	<name>com_advportfolio</name>
+	<author>http://extstore.com</author>
+	<creationDate>January 2013</creationDate>
+	<copyright>(C) 2010 - 2026 Skyline Technology Ltd. All rights reserved.</copyright>
+	<license>http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL</license>
+	<authorEmail>admin@extstore.com</authorEmail>
+	<authorUrl>http://extstore.com</authorUrl>
+	<version>2.0.0</version>
+	<description>Advanced Portfolio is a complete solution for building portfolio pages on Joomla websites. Now fully compatible with Joomla 6 and PHP 8.4+.</description>
+	<scriptfile>install.php</scriptfile>
+	<install>
+		<sql>
+			<file driver="mysql" charset="utf8mb4">admin/sql/install.mysql.utf8mb4.sql</file>
+		</sql>
+	</install>
+	<uninstall>
+		<sql>
+			<file driver="mysql" charset="utf8mb4">admin/sql/uninstall.mysql.utf8mb4.sql</file>
+		</sql>
+	</uninstall>
+	<files folder="site">
+		<filename>index.html</filename>
+		<filename>advportfolio.php</filename>
+		<filename>metadata.xml</filename>
+		<filename>router.php</filename>
+		<folder>controllers</folder>
+		<folder>helpers</folder>
+		<folder>models</folder>
+		<folder>views</folder>
+	</files>
+	<languages folder="site">
+		<language tag="en-GB">language/en-GB.com_advportfolio.ini</language>
+	</languages>
+	<media folder="media" destination="com_advportfolio">
+		<folder>css</folder>
+		<folder>images</folder>
+		<folder>js</folder>
+		<filename>index.html</filename>
+	</media>
+	<administration>
+		<menu>com_advportfolio</menu>
+		<submenu>
+			<menu link="option=com_advportfolio&amp;view=projects" view="projects">COM_ADVPORTFOLIO_SUBMENU_PROJECTS</menu>
+			<menu link="option=com_categories&amp;extension=com_advportfolio" view="categories" alt="Advanced Portfolio/Categories">COM_ADVPORTFOLIO_SUBMENU_CATEGORIES</menu>
+		</submenu>
+		<files folder="admin">
+			<filename>index.html</filename>
+			<filename>access.xml</filename>
+			<filename>config.xml</filename>
+			<filename>advportfolio.php</filename>
+			<folder>controllers</folder>
+			<folder>helpers</folder>
+			<folder>models</folder>
+			<folder>sql</folder>
+			<folder>tables</folder>
+			<folder>views</folder>
+		</files>
+		<languages folder="admin">
+			<language tag="en-GB">language/en-GB.com_advportfolio.ini</language>
+			<language tag="en-GB">language/en-GB.com_advportfolio.sys.ini</language>
+		</languages>
+	</administration>
+	<namespace path="src">AdvPortfolio</namespace>
+</extension>

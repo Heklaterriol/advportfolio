@@ -12,29 +12,53 @@ defined('_JEXEC') or die;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\Controller\BaseController;
-use Joomla\CMS\Helper\ContentHelper;
+use Joomla\CMS\WebAsset\WebAssetManager;
+use Joomla\CMS\Access\Exception\NotAllowed;
+use Joomla\CMS\HTML\HTMLHelper;
+
+// Get application
+$app = Factory::getApplication();
 
 // Access check.
-if (!Factory::getApplication()->getIdentity()->authorise('core.manage', 'com_advportfolio')) {
-	throw new Exception(Text::_('JERROR_ALERTNOAUTHOR'), 404);
+if (!$app->getIdentity()->authorise('core.manage', 'com_advportfolio')) {
+    throw new NotAllowed(Text::_('JERROR_ALERTNOAUTHOR'), 403);
 }
 
 // Get WebAssetManager
-$wa = Factory::getApplication()->getDocument()->getWebAssetManager();
+$wa = $app->getDocument()->getWebAssetManager();
 
-// REGISTER assets with CORRECT paths
-$wa->registerScript('com_advportfolio.admin.script', 'media/js/admin.script.js', [], ['defer' => true]);
-$wa->registerStyle('com_advportfolio.admin.style', 'media/css/admin.style.css');
+// REGISTER assets (correct media paths for component)
+$wa->registerScript(
+    'com_advportfolio.admin.script',
+    'com_advportfolio/js/admin.script.js',
+    [],
+    ['defer' => true]
+);
 
-// THEN use them
+$wa->registerStyle(
+    'com_advportfolio.admin.style',
+    'com_advportfolio/css/admin.style.css'
+);
+
+// USE assets
 $wa->useScript('com_advportfolio.admin.script');
 $wa->useStyle('com_advportfolio.admin.style');
 
-// Include dependencies
-ContentHelper::addIncludePath(JPATH_COMPONENT . '/helpers/html');
+/*
+ * Legacy helper includes removed.
+ * Joomla 4+ does not support ContentHelper::addIncludePath anymore.
+ */
 require_once JPATH_COMPONENT . '/helpers/factory.php';
 require_once JPATH_COMPONENT . '/helpers/imagelib.php';
 
-$controller = BaseController::getInstance('AdvPortfolio', ['default_view' => 'projects']);
-$controller->execute(Factory::getApplication()->getInput()->getCmd('task'));
+// Get controller
+$controller = BaseController::getInstance('AdvPortfolio', [
+    'default_view' => 'projects'
+]);
+
+// Execute task
+$task = $app->getInput()->getCmd('task', '');
+$controller->execute($task);
+
+// Redirect
 $controller->redirect();
