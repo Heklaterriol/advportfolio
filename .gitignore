@@ -703,3 +703,6 @@
 /README.txt
 /robots.txt.dist
 /web.config.txt
+_migration/01 MIGRATIONSMATRIX.txt
+_migration/02 MIGRATIONSMATRIX.txt
+_migration/03 MIGRATIONSMATRIX.txt
