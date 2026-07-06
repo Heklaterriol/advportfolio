@@ -12,7 +12,9 @@ use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\Helpers\Sidebar;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Object\CMSObject;
+use Joomla\CMS\Table\Table;
 use Joomla\CMS\Toolbar\ToolbarHelper;
+use Joomla\Registry\Registry;
 
 /**
  * Advanced Portfolio Helper.
@@ -144,5 +146,25 @@ class AdvportfolioHelper
 		}
 
 		return $items;
+	}
+
+	/**
+	 * Get credits footer string.
+	 * @return	string
+	 */
+	public static function getFooter()
+	{
+		return '<p class="sl_copyright"><span class="sl_title">Advanced Portfolio - Version ' . self::getVersion() . '</span> Copyright &copy; 2013 by <strong>Skyline Technology Ltd - <a href="http://extstore.com" target="_blank">http://extstore.com</a></strong></p>';
+}
+	/**
+	 * Get current version of component.
+	 */
+	public static function getVersion()
+	{
+		$table		= Table::getInstance('Extension');
+		$table->load(array('name' => 'com_advportfolio'));
+		$registry	= new Registry($table->manifest_cache);
+
+		return $registry->get('version');
 	}
 }

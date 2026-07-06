@@ -7,14 +7,14 @@ CREATE TABLE IF NOT EXISTS `#__advportfolio_projects` (
 	description text NOT NULL,
 	state tinyint(1) NOT NULL DEFAULT '0',
 	checked_out int(10) NOT NULL DEFAULT '0',
-	checked_out_time datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+	checked_out_time datetime NULL DEFAULT NULL,
 	ordering int(10) NOT NULL DEFAULT '0',
 	access int(10) NOT NULL DEFAULT '1',
 	`language` char(7) NOT NULL DEFAULT '',
-	created datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+	created datetime NULL DEFAULT NULL,
 	created_by int(10) unsigned NOT NULL DEFAULT '0',
 	created_by_alias varchar(255) NOT NULL DEFAULT '',
-	modified datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+	modified datetime NULL DEFAULT NULL,
 	modified_by int(10) unsigned NOT NULL DEFAULT '0',
 	params text NOT NULL,
 	metakey text NOT NULL,
@@ -32,4 +32,4 @@ CREATE TABLE IF NOT EXISTS `#__advportfolio_projects` (
 	KEY idx_catid (catid),
 	KEY idx_createdby (created_by),
 	KEY idx_language (`language`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;

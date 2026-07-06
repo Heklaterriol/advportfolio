@@ -6,7 +6,7 @@
  */
  -->
 
-<extension type="component" version="3.0" method="upgrade">
+<extension type="component" method="upgrade">
 	<name>com_advportfolio</name>
 	<author>http://extstore.com</author>
 	<creationDate>January 2013</creationDate>
@@ -15,6 +15,7 @@
 	<authorEmail>admin@extstore.com</authorEmail>
 	<authorUrl>http://extstore.com</authorUrl>
 	<version>1.3.6</version>
+	<namespace path="src">Joomla\Component\Advportfolio</namespace>
 	<description>
 	<![CDATA[
 		<div class="well well-small" style="font-weight: normal; text-align: left; color: #333;">
@@ -25,7 +26,7 @@
 				<table cellspacing="0" cellpadding="0" border="0" style="margin-bottom: 0" class="table table-striped">
 					<tr>
 						<td colspan="2">
-							<strong>Advanced Portfolio</strong> is an extension for Joomla! 3 developed by ExtStore Team. With clean theme, responsive design, it is a complete solution for anyone who wants to build portfolio pages on Joomla website.
+							<strong>Advanced Portfolio</strong> is an extension for Joomla! developed by ExtStore Team. With clean theme, responsive design, it is a complete solution for anyone who wants to build portfolio pages on Joomla website.
 						</td>
 					</tr>
 					<tr>
@@ -40,20 +41,12 @@
 						<td>Copyright:</td>
 						<td>&copy; Skyline Technology Ltd, All rights reserved.</td>
 					</tr>
-					<!--<tr>
-						<td>Document:</td>
-						<td><a href="" target="_blank">Read document</a></td>
-					</tr>-->
 					<tr>
 						<td>Support:</td>
 						<td>
 							<a href="http://support.extstore.com" target="_blank">Contact us or submit a ticket</a>
 						</td>
 					</tr>
-					<!--<tr>
-						<td>JED:</td>
-						<td><a href="" target="_blank">Vote and write review on JED</a></td>
-					</tr>-->
 					<tr>
 						<td>Facebook:</td>
 						<td><a href="http://facebook.com/extstore" target="_blank">http://facebook.com/extstore</a></td>
@@ -68,7 +61,7 @@
 	]]>
 	</description>
 
-	<scriptfile>install.php</scriptfile>
+	<scriptfile>script.php</scriptfile>
 
 	<install> <!-- Runs on install -->
 		<sql>
@@ -83,26 +76,20 @@
 	</uninstall>
 	
 	<files folder="site">
-		<filename>index.html</filename>
-		<filename>advportfolio.php</filename>
-		<filename>controller.php</filename>
+		<folder>services</folder>
+		<folder>src</folder>
+		<folder>tmpl</folder>
 		<filename>metadata.xml</filename>
-		<filename>router.php</filename>
-		<folder>controllers</folder>
-		<folder>helpers</folder>
-		<folder>models</folder>
-		<folder>views</folder>
 	</files>
 
-	<languages folder="site">
-		<language tag="en-GB">language/en-GB.com_advportfolio.ini</language>
+	<languages folder="site/language">
+		<language tag="en-GB">en-GB/com_advportfolio.ini</language>
 	</languages>
 
 	<media folder="media" destination="com_advportfolio">
 		<folder>css</folder>
 		<folder>images</folder>
 		<folder>js</folder>
-		<filename>index.html</filename>
 	</media>
 	
 	<administration>
@@ -110,27 +97,21 @@
 		<submenu>
 			<menu link="option=com_advportfolio&amp;view=projects" view="projects">com_advportfolio_submenu_projects</menu>
 			<menu link="option=com_categories&amp;extension=com_advportfolio" view="categories" alt="Advanced Portfolio/Categories">com_advportfolio_submenu_categories</menu>
-			
 		</submenu>
 
 		<files folder="admin">
-			<filename>index.html</filename>
 			<filename>access.xml</filename>
 			<filename>config.xml</filename>
-			<filename>controller.php</filename>
-			<filename>advportfolio.php</filename>
-			<folder>controllers</folder>
-			<folder>helpers</folder>
-			<folder>models</folder>
+			<folder>forms</folder>
+			<folder>services</folder>
 			<folder>sql</folder>
-			<folder>tables</folder>
-			<folder>views</folder>
+			<folder>src</folder>
+			<folder>tmpl</folder>
 		</files>
 
-		<languages folder="admin">
-			<language tag="en-GB">language/en-GB.com_advportfolio.ini</language>
-			<language tag="en-GB">language/en-GB.com_advportfolio.sys.ini</language>
+		<languages folder="admin/language">
+			<language tag="en-GB">en-GB/com_advportfolio.ini</language>
+			<language tag="en-GB">en-GB/com_advportfolio.sys.ini</language>
 		</languages>
 	</administration>
 </extension>
-

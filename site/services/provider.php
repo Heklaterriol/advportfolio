@@ -9,7 +9,8 @@ defined('_JEXEC') or die;
 use Joomla\CMS\Extension\ComponentInterface;
 use Joomla\CMS\Extension\Service\Provider\ComponentDispatcherFactory;
 use Joomla\CMS\Extension\Service\Provider\MVCFactory;
-use Joomla\Component\Advportfolio\Administrator\Extension\AdvportfolioComponent;
+use Joomla\CMS\Extension\Service\Provider\RouterFactory;
+use Joomla\Component\Advportfolio\Site\Extension\AdvportfolioComponent;
 use Joomla\DI\Container;
 use Joomla\DI\ServiceProviderInterface;
 
@@ -18,12 +19,14 @@ return new class implements ServiceProviderInterface {
 	{
 		$container->registerServiceProvider(new MVCFactory('\\Joomla\\Component\\Advportfolio'));
 		$container->registerServiceProvider(new ComponentDispatcherFactory('\\Joomla\\Component\\Advportfolio'));
+		$container->registerServiceProvider(new RouterFactory('\\Joomla\\Component\\Advportfolio'));
 
 		$container->set(
 			ComponentInterface::class,
 			function (Container $container) {
 				$component = new AdvportfolioComponent($container->get(ComponentDispatcherFactory::class));
 				$component->setMVCFactory($container->get(MVCFactory::class));
+				$component->setRouterFactory($container->get(RouterFactory::class));
 
 				return $component;
 			}
