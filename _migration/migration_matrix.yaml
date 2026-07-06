@@ -774,7 +774,7 @@ migration_matrix:
       target: "components/com_advportfolio/tmpl/projects/default.xml"
       type: tmpl_layout_metadata
       dependencies: []
-      status: pending
+      status: done
 
     - source: "site/views/projects/tmpl/index.html"
       target: "ENTFÄLLT"
@@ -786,14 +786,14 @@ migration_matrix:
       target: "components/com_advportfolio/src/View/Projects/HtmlView.php"
       type: view
       dependencies: ["JViewLegacy", "JText", "JFactory", "JError"]
-      status: pending
+      status: done
 
     # ===================== DOKUMENTATION (nicht Teil der Komponente) =====================
     - source: "full-structure.txt"
       target: "n/a – Entwicklungsdokumentation, nicht Teil des zu migrierenden Komponenten-Pakets"
       type: documentation
       dependencies: []
-      status: pending
+      status: done
 
   global_dependencies:
     legacy_classes:
