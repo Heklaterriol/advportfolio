@@ -8,7 +8,6 @@ namespace Joomla\Component\Advportfolio\Site\Service;
 
 defined('_JEXEC') or die;
 
-use Joomla\CMS\Categories\Categories;
 use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Component\Router\RouterBase;
 use Joomla\CMS\Factory;
@@ -83,7 +82,7 @@ class Router extends RouterBase
 				}
 
 				$menuCatid = $mId;
-				$categories = Categories::getInstance('Advportfolio');
+				$categories = Factory::getApplication()->bootComponent('com_advportfolio')->getCategory();
 				$category = $categories->get($catid);
 
 				if ($category) {
@@ -181,7 +180,7 @@ class Router extends RouterBase
 		// From the categories view, we can only jump to a category.
 		$id = (isset($item->query['id']) && $item->query['id'] > 1) ? $item->query['id'] : 'root';
 
-		$category = Categories::getInstance('Advportfolio')->get($id);
+		$category = Factory::getApplication()->bootComponent('com_advportfolio')->getCategory()->get($id);
 
 		$categories = ($category) ? $category->getChildren() : array();
 		$vars['catid'] = $id;

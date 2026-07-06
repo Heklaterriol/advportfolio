@@ -4,7 +4,7 @@
  * @license		http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL
  */
 
-namespace Joomla\Component\Advportfolio\Site\Helper;
+namespace Joomla\Component\Advportfolio\Site\Service;
 
 defined('_JEXEC') or die;
 
@@ -16,7 +16,7 @@ use Joomla\CMS\Categories\Categories;
  * @package		Joomla.Site
  * @subpakage	ExtStore.AdvPortfolio
  */
-class AdvportfolioCategories extends Categories
+class Category extends Categories
 {
 	public function __construct($options = array())
 	{

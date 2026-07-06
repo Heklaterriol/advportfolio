@@ -7,6 +7,7 @@
 defined('_JEXEC') or die;
 
 use Joomla\CMS\Extension\ComponentInterface;
+use Joomla\CMS\Extension\Service\Provider\CategoryFactory;
 use Joomla\CMS\Extension\Service\Provider\ComponentDispatcherFactory;
 use Joomla\CMS\Extension\Service\Provider\MVCFactory;
 use Joomla\CMS\Extension\Service\Provider\RouterFactory;
@@ -20,6 +21,7 @@ return new class implements ServiceProviderInterface {
 		$container->registerServiceProvider(new MVCFactory('\\Joomla\\Component\\Advportfolio'));
 		$container->registerServiceProvider(new ComponentDispatcherFactory('\\Joomla\\Component\\Advportfolio'));
 		$container->registerServiceProvider(new RouterFactory('\\Joomla\\Component\\Advportfolio'));
+		$container->registerServiceProvider(new CategoryFactory('\\Joomla\\Component\\Advportfolio'));
 
 		$container->set(
 			ComponentInterface::class,
@@ -27,6 +29,7 @@ return new class implements ServiceProviderInterface {
 				$component = new AdvportfolioComponent($container->get(ComponentDispatcherFactory::class));
 				$component->setMVCFactory($container->get(MVCFactory::class));
 				$component->setRouterFactory($container->get(RouterFactory::class));
+				$component->setCategoryFactory($container->get(CategoryFactory::class));
 
 				return $component;
 			}
