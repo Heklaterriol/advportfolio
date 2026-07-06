@@ -4,8 +4,6 @@
  * @license		http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL
  */
 
-namespace Joomla\Component\Advportfolio\Administrator\Extension;
-
 defined('_JEXEC') or die;
 
 use Joomla\CMS\Installer\InstallerAdapter;
