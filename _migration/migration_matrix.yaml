@@ -768,7 +768,7 @@ migration_matrix:
       target: "components/com_advportfolio/tmpl/projects/default.php"
       type: tmpl_layout
       dependencies: ["JHtml", "JText", "JApplication", "AdvPortfolioHelper", "AdvPortfolioHelperRoute"]
-      status: pending
+      status: done
 
     - source: "site/views/projects/tmpl/default.xml"
       target: "components/com_advportfolio/tmpl/projects/default.xml"
