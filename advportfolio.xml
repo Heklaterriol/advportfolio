@@ -76,6 +76,7 @@
 	</uninstall>
 	
 	<files folder="site">
+		<folder>helpers</folder>
 		<folder>services</folder>
 		<folder>src</folder>
 		<folder>tmpl</folder>
