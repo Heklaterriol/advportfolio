@@ -86,7 +86,7 @@ class ProjectController extends FormController
 		Session::checkToken() or jexit(Text::_('JINVALID_TOKEN'));
 
 		// Set the model
-		$model = $this->getModel('Project', '', array());
+		$model = $this->getModel('Project', 'Administrator', array());
 
 		// Preset the redirect
 		$this->setRedirect(Route::_('index.php?option=com_advportfolio&view=projects' . $this->getRedirectToListAppend(), false));
