@@ -8,14 +8,16 @@ namespace Joomla\Component\Advportfolio\Administrator\Extension;
 
 defined('_JEXEC') or die;
 
+use Joomla\CMS\Extension\BootableExtensionInterface;
 use Joomla\CMS\Extension\MVCComponent;
 use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
+use Psr\Container\ContainerInterface;
 
-class AdvportfolioComponent extends MVCComponent
+class AdvportfolioComponent extends MVCComponent implements BootableExtensionInterface
 {
-	public function boot(): void
+	public function boot(ContainerInterface $container): void
 	{
 		if (!Factory::getApplication()->getIdentity()->authorise('core.manage', 'com_advportfolio')) {
 			throw new \Exception(Text::_('JERROR_ALERTNOAUTHOR'), 404);
