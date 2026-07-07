@@ -13,7 +13,6 @@ use Joomla\CMS\Router\Route;
 use Joomla\Component\Advportfolio\Administrator\Helper\AdvportfolioHelper;
 
 HTMLHelper::_('bootstrap.tooltip');
-HTMLHelper::_('formbehavior.chosen', 'select');
 ?>
 
 <style>

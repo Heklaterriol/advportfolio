@@ -16,7 +16,6 @@ use Joomla\Component\Advportfolio\Administrator\Helper\AdvportfolioHelper;
 
 HTMLHelper::_('bootstrap.tooltip');
 HTMLHelper::_('behavior.formvalidation');
-HTMLHelper::_('formbehavior.chosen', 'select');
 $this->document->addScriptDeclaration(
 	<<<SCRIPT
 	(function($) {
