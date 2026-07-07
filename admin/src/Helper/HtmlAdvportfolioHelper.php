@@ -1,5 +1,17 @@
-<?php
 /**
+ * Advanced Portfolio HTML Helper.
+ *
+ * NOTE: This class is intentionally used from both the Administrator and Site
+ * side of the component. This mirrors the original Joomla 3 architecture,
+ * where site/advportfolio.php registered this class via
+ * JHtml::addIncludePath(JPATH_COMPONENT_ADMINISTRATOR . '/helpers/html')
+ * for cross-client access. No architectural change was made during the
+ * Joomla 6 migration; direct namespaced calls simply replace the old
+ * JHtml::_('advportfolio.*') dynamic dispatch mechanism, which no longer
+ * exists in Joomla 6.
+ *
+ * @package		Joomla.Administrator
+ * @subpackage	Skyline.Portfolio
  * @copyright	Copyright (c) 2013 Skyline Technology Ltd (http://extstore.com). All rights reserved.
  * @license		http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL
  */

@@ -8,6 +8,8 @@
 defined('_JEXEC') or die;
 
 use Joomla\CMS\HTML\HTMLHelper;
+// Intentional cross-client reference: mirrors the original Joomla 3 design
+// (see HtmlAdvportfolioHelper class docblock for details). Not an oversight.
 use Joomla\Component\Advportfolio\Administrator\Helper\HtmlAdvportfolioHelper;
 
 HtmlAdvportfolioHelper::modal();

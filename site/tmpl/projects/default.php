@@ -10,6 +10,8 @@ defined('_JEXEC') or die;
 use Joomla\CMS\Application\ApplicationHelper;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
+// Intentional cross-client reference: mirrors the original Joomla 3 design
+// (see HtmlAdvportfolioHelper class docblock for details). Not an oversight.
 use Joomla\Component\Advportfolio\Administrator\Helper\HtmlAdvportfolioHelper;
 use Joomla\Component\Advportfolio\Site\Helper\AdvportfolioHelper;
 use Joomla\Component\Advportfolio\Site\Service\Router;
