@@ -7,8 +7,8 @@
 // No direct access.
 defined('_JEXEC') or die;
 
-use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
+use Joomla\CMS\Layout\LayoutHelper;
 
 $published = $this->state->get('filter.state');
 ?>
@@ -21,23 +21,23 @@ $published = $this->state->get('filter.state');
 		<p><?php echo Text::_('COM_ADVPORTFOLIO_PROJECTS_BATCH_TIP'); ?></p>
 		<div class="control-group">
 			<div class="controls">
-				<?php echo HTMLHelper::_('batch.access'); ?>
+				<?php echo LayoutHelper::render('joomla.html.batch.access', []); ?>
 			</div>
 		</div>
 		<div class="control-group">
 			<div class="controls">
-				<?php echo HTMLHelper::_('batch.language'); ?>
+				<?php echo LayoutHelper::render('joomla.html.batch.language', []); ?>
 			</div>
 		</div>
 		<div class="control-group">
 			<div class="controls">
-				<?php echo HTMLHelper::_('batch.tag');?>
+				<?php echo LayoutHelper::render('joomla.html.batch.tag', []);?>
 			</div>
 		</div>
 		<?php if ($published >= 0) : ?>
 		<div class="control-group">
 			<div class="controls">
-				<?php echo HTMLHelper::_('batch.item', 'com_advportfolio');?>
+				<?php echo LayoutHelper::render('joomla.html.batch.item', ['extension' => 'com_advportfolio']);?>
 			</div>
 		</div>
 		<?php endif; ?>
