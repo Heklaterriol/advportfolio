@@ -81,12 +81,14 @@ class ProjectController extends FormController
 	 *
 	 * @return    void
 	 */
-	public function batch()
+	public function batch($model = null)
 	{
 		Session::checkToken() or jexit(Text::_('JINVALID_TOKEN'));
 
 		// Set the model
-		$model = $this->getModel('Project', 'Administrator', array());
+		if ($model === null) {
+			$model = $this->getModel('Project', 'Administrator', array());
+		}
 
 		// Preset the redirect
 		$this->setRedirect(Route::_('index.php?option=com_advportfolio&view=projects' . $this->getRedirectToListAppend(), false));
