@@ -138,7 +138,7 @@ class ProjectModel extends AdminModel
 			// Prime some default values.
 			if ($this->getState('project.id') == 0) {
 				$app	= Factory::getApplication();
-				$data->set('catid', $app->getInput()->getInt('catid', $app->getUserState('com_advportfolio.projects.filter.category_id')));
+				$data->catid = $app->getInput()->getInt('catid', $app->getUserState('com_advportfolio.projects.filter.category_id'));				
 			}
 		}
 
@@ -156,12 +156,12 @@ class ProjectModel extends AdminModel
 		if ($item	= parent::getItem($pk)) {
 			// Convert the metadata field to an array.
 			$registry = new Registry();
-			$registry->loadString($item->metadata);
+			$registry->loadString($item->metadata ?? '');
 			$item->metadata = $registry->toArray();
 
 			// Convert the images field to an array.
 			$registry = new Registry();
-			$registry->loadString($item->images);
+			$registry->loadString($item->images ?? '');
 			$item->images = $registry->toArray();
 
 			// Get tags
