@@ -38,7 +38,6 @@ SCRIPT
 	<script type="text/javascript">
 		Joomla.submitbutton = function (task) {
 			if (task == 'project.cancel' || document.formvalidator.isValid(document.id('project-form'))) {
-				<?php echo $this->form->getField('description')->save(); ?>
 				Joomla.submitform(task, document.getElementById('project-form'));
 			} else {
 				alert('<?php echo $this->escape(Text::_('JGLOBAL_VALIDATION_FORM_FAILED')); ?>');
