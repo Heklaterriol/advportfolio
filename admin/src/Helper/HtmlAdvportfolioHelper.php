@@ -1,3 +1,4 @@
+<?php
 /**
  * Advanced Portfolio HTML Helper.
  *
