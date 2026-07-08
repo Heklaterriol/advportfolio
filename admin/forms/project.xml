@@ -6,7 +6,7 @@
  */
  -->
 
-<form>
+<form addfieldprefix="Joomla\Component\Advportfolio\Administrator\Field">
 	<fieldset>
 		<field
 			name="id"
