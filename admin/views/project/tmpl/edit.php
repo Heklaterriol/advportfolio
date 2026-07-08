@@ -7,8 +7,8 @@
 // No direct access.
 defined('_JEXEC') or die;
 
-JHtml::_('behavior.tooltip');
-JHtml::_('behavior.formvalidation');
+JHtml::_('bootstrap.tooltip');
+HTMLHelper::_('behavior.formvalidator');
 JHtml::_('formbehavior.chosen', 'select');
 $this->document->addScriptDeclaration(
 	<<<SCRIPT
